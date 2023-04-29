@@ -25,7 +25,7 @@ module.exports = async function leftChatMemberEvent(bot, msg) {
   const admins = await getAdmins();
   const isValidAdmins = checkObjectPresence(chatAdmins, admins);
   if (!isValidAdmins) {
-    const res = await updateGroup(bot, msg.chat.id, { status: 0 });
-    return await bot.sendMessage(msg.chat.id, `Группа в режиме ожидания.`);
+    await bot.sendMessage(msg.chat.id, `Группа в режиме ожидания.`);
+    return await updateGroup(bot, msg.chat.id, { status: 0, active: 0 });
   }
 };

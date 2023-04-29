@@ -16,8 +16,10 @@ function checkObjectPresence(arr1, arr2) {
 }
 
 module.exports = async function newChatMemberEvent(bot, msg) {
+  console.log(msg);
   const me = await bot.getMe();
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  console.log(group, 'GROUP');
   if (me.id === msg.new_chat_member.id)
     return await updateGroup(bot, msg.chat.id, { status: 1 });
 

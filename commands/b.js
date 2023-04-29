@@ -1,5 +1,5 @@
 const { evaluate, expression } = require('mathjs');
-const { findOrCreateGroup, updateGroup } = require('../http/api-group');
+const { findOrCreateGroup } = require('../http/api-group');
 const {
   setBalances,
   delBalances,
@@ -73,12 +73,18 @@ const showBalance = async (bot, chatId) => {
       balance.balance
     )}\n`;
   });
+  console.log(lastRecord);
   await bot.sendMessage(
     chatId,
     balances.length > 0
-      ? `<b>Запомнил ${formatter(lastRecord.symbol, lastRecord.val)}\n</b>${
-          lastRecord.event ? 'Event <b>' + lastRecord.event + '</b> ' : ''
-        }Currency <b>${lastRecord.symbol}</b>\n\n` + `Balance:\n${message}`
+      ? `<b>${
+          lastRecord.event === 'DEL'
+            ? 'Запомнил - Удалил баланс ' + lastRecord.symbol
+            : 'Запомнил'
+        } ${formatter(
+          lastRecord.symbol,
+          lastRecord.val
+        )}\n\n</b>\Баланс:\n${message}`
       : `Балансы пустые. Используйте /b «валюта» «сумма» «комментарий»`,
     { parse_mode: 'HTML' }
   );
@@ -97,18 +103,13 @@ const setBalance = async (bot, msg, args) => {
   console.log(balance);
   await bot.sendMessage(
     msg.chat.id,
-    `<b>Добавил ${formatter(
+    `<b>Запомнил ${formatter(
       balance.lastRecord.symbol,
       balance.lastRecord.val
-    )}\n</b>${
-      balance.lastRecord.event
-        ? 'Event <b>' + balance.lastRecord.event + '</b> '
-        : ''
-    }Currency <b>${balance.lastRecord.symbol}</b>\n\n` +
-      `Balance:\n<b>${balance.oldBal.symbol.toUpperCase()}:</b> ${formatter(
-        balance.oldBal.symbol,
-        balance.oldBal.balance
-      )}`,
+    )}</b>\n\nБаланс <b>${balance.oldBal.symbol.toUpperCase()}:</b> ${formatter(
+      balance.oldBal.symbol,
+      balance.oldBal.balance
+    )}`,
     { parse_mode: 'HTML' }
   );
 };
