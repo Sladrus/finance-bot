@@ -10,7 +10,7 @@ module.exports = async function hCommand(bot, msg, args) {
   if (group.active === 0) {
     return await bot.sendMessage(
       msg.chat.id,
-      'Учет кассы в этом чате не активирован. Используйте /active «ключ»'
+      'Учет кассы в этом чате не активирован. Используйте /active'
     );
   }
   const hash = uuidv4();

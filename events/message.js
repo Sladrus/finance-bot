@@ -16,8 +16,9 @@ module.exports = async function messageEvent(bot, msg) {
     }
   }
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
-  if (!group.status) {
+  if (!group.status && group.in_chat) {
     const res = await updateGroup(bot, msg.chat.id, { status: 1 });
+    //отправляю запрос на то, что клиент вернулся
     await bot.sendMessage(msg.chat.id, `Группа вновь активна.`);
   }
 };

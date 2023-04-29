@@ -9,7 +9,7 @@ async function createTasks(bot, chat_id, body) {
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat_id,
-        'Учет кассы в этом чате не активирован. Используйте /active «ключ»'
+        'Учет кассы в этом чате не активирован. Используйте /active'
       );
     }
     if (error?.response?.status === 401) {

@@ -9,7 +9,7 @@ async function showBalances(bot, chat_id) {
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat_id,
-        'Учет кассы в этом чате не активирован. Используйте /active «ключ»'
+        'Учет кассы в этом чате не активирован. Используйте /active'
       );
     }
     if (error?.response?.status === 401) {
@@ -50,7 +50,7 @@ async function setBalances(
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
-        'Учет кассы в этом чате не активирован. Используйте /active «ключ»'
+        'Учет кассы в этом чате не активирован. Используйте /active'
       );
     }
     if (error?.response?.status === 400) {
@@ -88,7 +88,7 @@ async function delBalances(bot, { chat, message_id, from }, symbol, event) {
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
-        'Учет кассы в этом чате не активирован. Используйте /active «ключ»'
+        'Учет кассы в этом чате не активирован. Используйте /active'
       );
     }
     if (error?.response?.status === 400) {

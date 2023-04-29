@@ -8,7 +8,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
   if (!group.active)
     return await bot.sendMessage(
       msg.chat.id,
-      'Учет кассы в этом чате не активирован. Используйте /active «ключ»'
+      'Учет кассы в этом чате не активирован. Используйте /active'
     );
   const message = await bot.sendMessage(
     msg.chat.id,
