@@ -35,7 +35,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
 
   if (result?.status === 'activated')
     return await bot.editMessageText(
-      `Личный создан и активирован\nEmail для входа: ${result?.email}`,
+      `Личный кабинет создан и активирован\nEmail для входа: ${result?.email}`,
       {
         chat_id: msg.chat.id,
         message_id: message.message_id,
