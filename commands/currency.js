@@ -43,7 +43,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
   const fullCourse = `${
     amount ? amount : 1
   } ${currencies[0].toUpperCase()} = ${realAmount.toFixed(
-    8
+    4
   )} ${currencies[1].toUpperCase()}\n`;
   const minCourse = `${
     getEmojiByCurrencyCode(currencies[0].toUpperCase()) || ''
@@ -58,7 +58,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
       data.updated
     }</pre>\n<a href="https://www.xe.com/currencyconverter/convert/?Amount=${
       amount || 1
-    }&From=${currencies[0]}&To=${currencies[1]}">xe.com</a>`,
+    }&From=${currencies[0].toUpperCase()}&To=${currencies[1].toUpperCase()}">xe.com</a>`,
     { chat_id: msg.chat.id, message_id: message.message_id, parse_mode: 'HTML' }
   );
 };
