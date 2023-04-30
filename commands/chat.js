@@ -7,12 +7,6 @@ module.exports = async function getChatCommand(bot, msg, args) {
   if (msg.chat.id != -800378415) return;
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
   if (!group) return;
-  if (group.active === 0) {
-    return await bot.sendMessage(
-      msg.chat.id,
-      'Учет кассы в этом чате не активирован. Используйте /active'
-    );
-  }
   const chat = await getEmptyChat(bot, msg.chat.id);
   if (!chat) {
     await bot.sendMessage(msg.chat.id, `Свободные чаты закончились.`, {
