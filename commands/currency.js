@@ -59,6 +59,11 @@ module.exports = async function currencyCommand(bot, msg, match) {
     }</pre>\n<a href="https://www.xe.com/currencyconverter/convert/?Amount=${
       amount || 1
     }&From=${currencies[0].toUpperCase()}&To=${currencies[1].toUpperCase()}">xe.com</a>`,
-    { chat_id: msg.chat.id, message_id: message.message_id, parse_mode: 'HTML' }
+    {
+      chat_id: msg.chat.id,
+      message_id: message.message_id,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+    }
   );
 };
