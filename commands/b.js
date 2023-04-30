@@ -98,7 +98,7 @@ const setBalance = async (bot, msg, args) => {
     msg.chat.id,
     `<b>Запомнил ${formatter(
       balance.lastRecord.symbol,
-      balance.lastRecord.valqa
+      balance.lastRecord.val
     )}</b>\nБаланс <b>${balance.oldBal.symbol.toUpperCase()}:</b> ${formatter(
       balance.oldBal.symbol,
       balance.oldBal.balance
