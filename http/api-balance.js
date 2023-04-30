@@ -71,13 +71,16 @@ async function setBalances(
 
 async function delBalances(bot, { chat, message_id, from }, symbol, event) {
   try {
+    const first = from.first_name || '';
+    const last = from.last_name || '';
+    const name = first + ' ' + last;
     const response = await baseApi.post(
       `/balance/del/${chat.id}`,
       {
         event,
         comment: 'BDel',
         message_id,
-        first_name: from.username || from.first_name,
+        first_name: name,
       },
       {
         params: {
