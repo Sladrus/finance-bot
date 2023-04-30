@@ -22,7 +22,7 @@ module.exports = async function getChatCommand(bot, msg, args) {
     await bot.sendMessage(
       msg.chat.id,
       `Your client ID: <b>${chat.id}</b>\n👉 Working chat: <b>${chat.chat_url}</b>`,
-      { parse_mode: 'HTML' }
+      { parse_mode: 'HTML', disable_web_page_preview: true }
     );
   }
 };

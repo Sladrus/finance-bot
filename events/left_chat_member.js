@@ -34,12 +34,12 @@ module.exports = async function leftChatMemberEvent(bot, msg) {
     const res = await updateGroup(bot, msg.chat.id, { status: 0 });
     return;
   }
-  const admins = await getAdmins();
-  const isAdmin = checkObjectPresenceMembers([msg.left_chat_member], admins);
-  const chatAdmins = await bot.getChatAdministrators(msg.chat.id);
-  const isValidAdmins = checkObjectPresence(chatAdmins, admins);
-  if (!isValidAdmins && isAdmin) {
-    await bot.sendMessage(msg.chat.id, `Группа в режиме ожидания. Напишите любое сообщение, чтобы вновь активировать группу.`);
-    return await updateGroup(bot, msg.chat.id, { status: 0, active: 0 });
-  }
+  // const admins = await getAdmins();
+  // const isAdmin = checkObjectPresenceMembers([msg.left_chat_member], admins);
+  // const chatAdmins = await bot.getChatAdministrators(msg.chat.id);
+  // const isValidAdmins = checkObjectPresence(chatAdmins, admins);
+  // if (!isValidAdmins && isAdmin) {
+  //   await bot.sendMessage(msg.chat.id, `Группа в режиме ожидания. Напишите любое сообщение, чтобы вновь активировать группу.`);
+  //   return await updateGroup(bot, msg.chat.id, { status: 0, active: 0 });
+  // }
 };

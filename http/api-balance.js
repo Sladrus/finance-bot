@@ -29,13 +29,16 @@ async function setBalances(
   comment
 ) {
   try {
+    const first = from.first_name || '';
+    const last = from.last_name || '';
+    const name = first + ' ' + last;
     const response = await baseApi.post(
       `/balance/set/${chat.id}`,
       {
         event,
         comment,
         message_id,
-        first_name: from.username || from.first_name,
+        first_name: name,
       },
       {
         params: {

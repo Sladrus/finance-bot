@@ -29,7 +29,7 @@ function validateSymbol(arg0, arg1) {
     'CAD',
   ];
   const events = ['SP', 'IN', 'OUT', 'DEL'];
-  const event = events.includes(arg0.toUpperCase()) ? arg0.toUpperCase() : null;
+  const event = events.includes(arg0.toUpperCase()) ? arg0.toLowerCase() : null;
   if (event) {
     const symbol = arg1.toUpperCase();
     return currencies.includes(symbol) ? [event, symbol] : [null, null];
@@ -77,14 +77,7 @@ const showBalance = async (bot, chatId) => {
   await bot.sendMessage(
     chatId,
     balances.length > 0
-      ? `<b>${
-          lastRecord.event === 'DEL'
-            ? 'Запомнил - Удалил баланс ' + lastRecord.symbol
-            : 'Запомнил'
-        } ${formatter(
-          lastRecord.symbol,
-          lastRecord.val
-        )}\n\n</b>\Баланс:\n${message}`
+      ? `Баланс:\n${message}`
       : `Балансы пустые. Используйте /b «валюта» «сумма» «комментарий»`,
     { parse_mode: 'HTML' }
   );
@@ -105,8 +98,8 @@ const setBalance = async (bot, msg, args) => {
     msg.chat.id,
     `<b>Запомнил ${formatter(
       balance.lastRecord.symbol,
-      balance.lastRecord.val
-    )}</b>\n\nБаланс <b>${balance.oldBal.symbol.toUpperCase()}:</b> ${formatter(
+      balance.lastRecord.valqa
+    )}</b>\nБаланс <b>${balance.oldBal.symbol.toUpperCase()}:</b> ${formatter(
       balance.oldBal.symbol,
       balance.oldBal.balance
     )}`,
@@ -116,11 +109,10 @@ const setBalance = async (bot, msg, args) => {
 
 const delBalance = async (bot, msg, args) => {
   const [event, symbol] = validateSymbol(args[0], args[1]);
-  console.log(event, symbol);
   if (symbol === null)
     return await bot.sendMessage(
       msg.chat.id,
-      `Произошла ошибка! Такая валюта не принимается!`,
+      `Произошла ошибка! Такая валюта не принимается/!`,
       { parse_mode: 'HTML' }
     );
   const balance = await delBalances(bot, msg, symbol, event);
