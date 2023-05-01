@@ -17,7 +17,8 @@ function checkObjectPresence(arr1, arr2) {
 module.exports = async function activeCommand(bot, msg, args) {
   if (args['=ERRORS'].length) return;
   if (msg.chat.type === 'private') return;
-
+  const admins1 = await getAdmins();
+  console.log(admins1);
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
   if (!group) return;
   if (group.active === 1) {
@@ -28,6 +29,7 @@ module.exports = async function activeCommand(bot, msg, args) {
   }
   const chatAdmins = await bot.getChatAdministrators(msg.chat.id);
   const admins = await getAdmins();
+  console.log(admins);
   const isValidAdmins = checkObjectPresence([msg.from], admins);
   console.log(isValidAdmins, chatAdmins);
   if (!isValidAdmins)
