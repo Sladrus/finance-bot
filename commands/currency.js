@@ -13,6 +13,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
 
   const exchange = match[0].split(' ')[0].replace('/', '');
   const amount = match[0].split(' ')[1];
+
   if (isCommand(exchange)) return;
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
   if (!group) return;
