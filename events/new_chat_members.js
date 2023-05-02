@@ -38,6 +38,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
     `Добро пожаловать!\n\nВы зашли в личный кабинет, здесь мы ведем учет бухгалтерии, принимаем и обрабатываем заявки, считаем курс\n\nИспользуйте команду /help чтобы получить ответы на часто задаваемые вопросы\n\nДля расчета курса опишите пожалуйста вашу задачу: куда и откуда отправляем перевод, какая сумма? После этого @moneyport_admin сориентирует вас по условиям перевода.`
   );
   const order = await getOrder(bot, -100139981704);
+  console.log(order);
   if (order?.error) return;
   let how_to_send;
   if (order['how_to_send'] == 'physical') {
