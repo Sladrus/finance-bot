@@ -20,7 +20,7 @@ async function getOrder(bot, chat_id) {
     return response.data;
   } catch (error) {
     console.error(error);
-    return { result: false };
+    return { result: false, error: true };
   }
 }
 
