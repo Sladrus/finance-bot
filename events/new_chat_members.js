@@ -1,4 +1,5 @@
 const { getAdmins } = require('../http/api-admins');
+const { getOrder } = require('../http/api-cabinet');
 const { findOrCreateGroup, updateGroup } = require('../http/api-group');
 const { formatDate } = require('../utils');
 
@@ -32,8 +33,24 @@ module.exports = async function newChatMemberEvent(bot, msg) {
     });
   }
 
-  return await bot.sendMessage(
+  await bot.sendMessage(
     msg.chat.id,
     `Добро пожаловать!\n\nВы зашли в личный кабинет, здесь мы ведем учет бухгалтерии, принимаем и обрабатываем заявки, считаем курс\n\nИспользуйте команду /help чтобы получить ответы на часто задаваемые вопросы\n\nДля расчета курса опишите пожалуйста вашу задачу: куда и откуда отправляем перевод, какая сумма? После этого @moneyport_admin сориентирует вас по условиям перевода.`
+  );
+  const order = await getOrder();
+  if (order?.error) return;
+  let how_to_send;
+  if (order['how_to_send'] == 'physical') {
+    how_to_send = 'Перевод физическому лицу';
+  }
+  if (order['how_to_send'] == 'invoice') {
+    how_to_send = 'Оплата инвойса юридическому лицу';
+  }
+  if (order['how_to_send'] == 'cash') {
+    how_to_send = 'Выдача наличных';
+  }
+  return await bot.sendMessage(
+    msg.chat.id,
+    `На сайте вы указали информацию:\n1. Хотите совершить перевод: ${how_to_send}\n2. Валюта получения: ${order['symbol']}\n3. Сумма к получению: ${order['summ']}\n\nЧерез пару минут подключится менеджер и задаст уточняющие вопросы`
   );
 };
