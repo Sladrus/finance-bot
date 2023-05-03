@@ -6,7 +6,7 @@ function checkObjectPresence(arr1, arr2) {
     const obj1 = arr1[i];
     for (let j = 0; j < arr2.length; j++) {
       const obj2 = arr2[j];
-      if (obj1.user.id === obj2.tlg_user_id) {
+      if (obj1.user.id === Number(obj2.tlg_user_id)) {
         return true;
       }
     }
