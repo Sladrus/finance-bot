@@ -9,15 +9,14 @@ function isCommand(exchange) {
 }
 
 module.exports = async function currencyCommand(bot, msg, match) {
-  if (msg.chat.type === 'private') return;
-
   const exchange = match[0].split(' ')[0].replace('/', '');
   const amount = match[0].split(' ')[1];
 
   if (isCommand(exchange)) return;
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
-  if (!group) return;
-  const me = await bot.getMe();
+  if (msg.chat.type !== 'private') {
+    const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+    if (!group) return;
+  }
 
   const currencies = splitOnHalf(exchange);
 
