@@ -28,6 +28,7 @@ function validateSymbol(arg0, arg1) {
     'TRY',
     'CAD',
     'THB',
+    'GRX',
   ];
   const events = ['SP', 'IN', 'OUT', 'DEL'];
   const event = events.includes(arg0.toUpperCase()) ? arg0.toLowerCase() : null;
