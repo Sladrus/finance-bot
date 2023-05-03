@@ -1,10 +1,11 @@
 const getSymbolFromCurrency = require('currency-symbol-map');
 
 function formatter(currency, money) {
-  var symbol = getSymbolFromCurrency(currency);
+  var symbol = currency === 'USDT' ? '₮' : getSymbolFromCurrency(currency);
   symbol = symbol ? ' ' + symbol : ' ' + currency;
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
   return formatter.format(money).replaceAll(',', "'") + symbol;
 }
