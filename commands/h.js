@@ -1,11 +1,11 @@
-const { findOrCreateGroup, updateGroup } = require('../http/api-group');
+const { findOrCreateGroup, updateGroup, findGroup } = require('../http/api-group');
 const { v4: uuidv4 } = require('uuid');
 const { formatDate } = require('../utils');
 
 module.exports = async function hCommand(bot, msg, args) {
   if (msg.chat.type === 'private') return;
 
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  const group = await findGroup(bot, msg.chat.id, msg.chat.title);
   if (!group) return;
   if (group.active === 0) {
     return await bot.sendMessage(

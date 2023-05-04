@@ -1,9 +1,9 @@
 const { createCabinet } = require('../http/api-cabinet');
-const { findOrCreateGroup } = require('../http/api-group');
+const { findOrCreateGroup, findGroup } = require('../http/api-group');
 
 module.exports = async function cabinetCommand(bot, msg, args) {
   if (msg.chat.type === 'private') return;
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  const group = await findGroup(bot, msg.chat.id);
   if (!group) return;
   if (!group.active)
     return await bot.sendMessage(

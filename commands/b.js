@@ -1,5 +1,5 @@
 const { evaluate, expression } = require('mathjs');
-const { findOrCreateGroup } = require('../http/api-group');
+const { findOrCreateGroup, findGroup } = require('../http/api-group');
 const {
   setBalances,
   delBalances,
@@ -129,7 +129,8 @@ const delBalance = async (bot, msg, args) => {
 module.exports = async function bCommand(bot, msg, args) {
   if (args['=ERRORS'].length) return;
   if (msg.chat.type === 'private') return;
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  const group = await findGroup(bot, msg.chat.id, msg.chat.title);
+  console.log(group);
   if (!group) return;
   if (args.length === 0) return await showBalance(bot, msg.chat.id);
   if (args.length >= 2)

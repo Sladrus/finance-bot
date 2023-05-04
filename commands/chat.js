@@ -1,11 +1,11 @@
 const { getEmptyChat } = require('../http/api-chat');
-const { findOrCreateGroup } = require('../http/api-group');
+const { findOrCreateGroup, findGroup } = require('../http/api-group');
 
 module.exports = async function getChatCommand(bot, msg, args) {
   //МОЖЕТ ВЫЗЫВАТЬСЯ ТОЛЬКО В ОПРЕДЕЛЕННОЙ ГРУППЕ
   if (msg.chat.type === 'private') return;
   if (msg.chat.id != -800378415) return;
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  const group = await findGroup(bot, msg.chat.id);
   if (!group) return;
   const chat = await getEmptyChat(bot, msg.chat.id);
   if (!chat) {

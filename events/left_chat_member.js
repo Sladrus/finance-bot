@@ -1,5 +1,5 @@
 const { getAdmins } = require('../http/api-admins');
-const { findOrCreateGroup, updateGroup } = require('../http/api-group');
+const { findOrCreateGroup, updateGroup, findGroup } = require('../http/api-group');
 
 function checkObjectPresence(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -30,7 +30,7 @@ function checkObjectPresenceMembers(arr1, arr2) {
 module.exports = async function leftChatMemberEvent(bot, msg) {
   const me = await bot.getMe();
   if (me.id === msg.left_chat_member.id) {
-    const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+    const group = await findGroup(bot, msg.chat.id, msg.chat.title);
     const res = await updateGroup(bot, msg.chat.id, { status: 0 });
     return;
   }

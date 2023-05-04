@@ -1,4 +1,4 @@
-const { findOrCreateGroup } = require('../http/api-group');
+const { findOrCreateGroup, findGroup } = require('../http/api-group');
 const { createTasks } = require('../http/api-task');
 
 const findDaysIndex = (args) => {
@@ -40,7 +40,7 @@ module.exports = async function taskCommand(bot, msg, args) {
   if (args['=ERRORS'].length) return;
   if (msg.chat.type === 'private') return;
 
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  const group = await findGroup(bot, msg.chat.id, msg.chat.title);
   if (!group) return;
   if (args.length >= 1) await createTask(bot, msg, args);
 };

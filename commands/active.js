@@ -1,5 +1,5 @@
 const { getAdmins } = require('../http/api-admins');
-const { findOrCreateGroup, activeGroup } = require('../http/api-group');
+const { findOrCreateGroup, activeGroup, findGroup } = require('../http/api-group');
 
 function checkObjectPresence(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -17,7 +17,7 @@ function checkObjectPresence(arr1, arr2) {
 module.exports = async function activeCommand(bot, msg, args) {
   if (args['=ERRORS'].length) return;
   if (msg.chat.type === 'private') return;
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  const group = await findGroup(bot, msg.chat.id);
   if (!group) return;
   if (group.active === 1) {
     return await bot.sendMessage(

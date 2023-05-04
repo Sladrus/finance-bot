@@ -1,6 +1,10 @@
 const { getAdmins } = require('../http/api-admins');
 const { getOrder } = require('../http/api-cabinet');
-const { findOrCreateGroup, updateGroup } = require('../http/api-group');
+const {
+  findOrCreateGroup,
+  updateGroup,
+  findGroup,
+} = require('../http/api-group');
 const { formatDate } = require('../utils');
 
 function checkObjectPresence(arr1, arr2) {
@@ -19,13 +23,14 @@ function checkObjectPresence(arr1, arr2) {
 module.exports = async function newChatMemberEvent(bot, msg) {
   console.log(msg);
   const me = await bot.getMe();
-  const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
-  if (me.id === msg.new_chat_member.id)
-    return await updateGroup(bot, msg.chat.id, { status: 1 });
-
+  if (me.id === msg.new_chat_member.id) {
+    console.log('Create Group from invites');
+    return await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  }
   const admins = await getAdmins();
   const isAdmin = checkObjectPresence(msg.new_chat_members, admins);
   if (isAdmin) return;
+  const group = await findGroup(bot, msg.chat.id);
   if (!group?.in_chat) {
     await updateGroup(bot, msg.chat.id, {
       status: 1,

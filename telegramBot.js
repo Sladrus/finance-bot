@@ -27,6 +27,8 @@ class TelegramBotApp {
     this.registerEvent('polling_error', this.bot);
     this.registerEvent('inline_query', this.bot);
     this.registerEvent('message', this.bot);
+    this.registerEvent('new_chat_title', this.bot);
+    this.registerEvent('group_chat_created', this.bot);
 
     this.registerRegExpCommand(/^\/.*/, 'log_commands', this.bot);
     this.registerRegExpCommand(

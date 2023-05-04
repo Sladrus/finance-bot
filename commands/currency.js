@@ -1,10 +1,10 @@
 const { getEmojiByCurrencyCode } = require('country-currency-emoji-flags');
 const { convertCurrency } = require('../http/api-convert');
-const { findOrCreateGroup } = require('../http/api-group');
+const { findOrCreateGroup, findGroup } = require('../http/api-group');
 const { randomIntFromInterval, splitOnHalf } = require('../utils');
 
 function isCommand(exchange) {
-  const commands = ['active', 'chatid'];
+  const commands = ['active', 'chatid', 'primer'];
   return commands.includes(exchange) ? exchange : null;
 }
 
@@ -14,7 +14,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
 
   if (isCommand(exchange)) return;
   if (msg.chat.type !== 'private') {
-    const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+    const group = await findGroup(bot, msg.chat.id);
     if (!group) return;
   }
 
