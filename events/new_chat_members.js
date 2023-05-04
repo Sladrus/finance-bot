@@ -39,7 +39,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
   );
   const order = await getOrder(bot, msg.chat.id);
   console.log(order);
-  if (order?.error) return;
+  if (!order || !order['how_to_send']) return;
   let how_to_send;
   if (order['how_to_send'] == 'physical') {
     how_to_send = 'Перевод физическому лицу';
@@ -50,6 +50,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
   if (order['how_to_send'] == 'cash') {
     how_to_send = 'Выдача наличных';
   }
+  console.log(how_to_send);
   return await bot.sendMessage(
     msg.chat.id,
     `На сайте вы указали информацию:\n1. Хотите совершить перевод: ${how_to_send}\n2. Валюта получения: ${order['symbol']}\n3. Сумма к получению: ${order['summ']}\n\nЧерез пару минут подключится менеджер и задаст уточняющие вопросы`

@@ -6,7 +6,7 @@ module.exports = async function inlineQueryEvent(bot, msg) {
     let answer;
     const formatter = new Intl.NumberFormat('en-US', {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      maximumFractionDigits: 8,
     });
     if (query) {
       const result = evaluate(query); // this will evaluate the expression entered by user
