@@ -21,7 +21,7 @@ function checkObjectPresence(arr1, arr2) {
 }
 
 module.exports = async function newChatMemberEvent(bot, msg) {
-  console.log(msg);
+  // console.log(msg);
   const me = await bot.getMe();
   if (me.id === msg.new_chat_member.id) {
     console.log('Create Group from invites');
