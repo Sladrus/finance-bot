@@ -4,6 +4,7 @@ const { createLogs } = require('../http/api-logs');
 module.exports = async function messageEvent(bot, msg) {
   if (msg.chat.type === 'private') return;
   console.log(msg);
+
   if (msg.chat.type === 'group') {
     const newChatId = msg?.migrate_to_chat_id;
     if (newChatId === undefined) return;

@@ -2,11 +2,15 @@ const { baseApi } = require('./api');
 
 async function createLogs(bot, { chat, message_id, from, text }) {
   try {
+    const first = from.first_name || '';
+    const last = from.last_name || '';
+    const name = first + ' ' + last;
     const response = await baseApi.post(`/log/create/${chat.id}`, {
       user_id: from.id,
       text,
       message_id,
-      username: from.username || from.first_name,
+      username: from.username || null,
+      author: name
     });
     return response.data;
   } catch (error) {
