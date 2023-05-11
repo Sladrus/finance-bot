@@ -8,6 +8,7 @@ module.exports = async function getChatCommand(bot, msg, args) {
   const group = await findGroup(bot, msg.chat.id);
   if (!group) return;
   const chat = await getEmptyChat(bot, msg.chat.id);
+  console.log(chat);
   if (!chat) {
     await bot.sendMessage(msg.chat.id, `Свободные чаты закончились.`, {
       parse_mode: 'HTML',

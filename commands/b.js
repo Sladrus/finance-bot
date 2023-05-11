@@ -44,6 +44,10 @@ function validateArgs(args) {
   try {
     const [event, symbol] = validateSymbol(args[0], args[1]);
     const symbolIndex = event ? 2 : 1;
+    // const expression = args[symbolIndex];
+    // const comment = args.slice(symbolIndex + 1, args.length).join(' ') || null;
+    // console.log(event, symbol, expression, comment);
+
     const index = findCommentIndex(args.slice(symbolIndex, args.length));
     const expression =
       index == -1
@@ -55,6 +59,7 @@ function validateArgs(args) {
       index != -1 ? args.slice(index + symbolIndex).join(' ') : null;
     console.log(event, symbol, evaluate(expression), comment);
     return [event, symbol, evaluate(expression), comment];
+    // return [event, symbol, evaluate(expression), comment];
   } catch (e) {
     console.log(e);
     return [null, null, null, null];
@@ -125,7 +130,7 @@ const delBalance = async (bot, msg, args) => {
     { parse_mode: 'HTML' }
   );
 };
-
+//b sp rub 100
 module.exports = async function bCommand(bot, msg, args) {
   if (args['=ERRORS'].length) return;
   if (msg.chat.type === 'private') return;
