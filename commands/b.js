@@ -44,22 +44,29 @@ function validateArgs(args) {
   try {
     const [event, symbol] = validateSymbol(args[0], args[1]);
     const symbolIndex = event ? 2 : 1;
-    // const expression = args[symbolIndex];
-    // const comment = args.slice(symbolIndex + 1, args.length).join(' ') || null;
-    // console.log(event, symbol, expression, comment);
+    const expression = args[symbolIndex];
+    const comment = args.slice(symbolIndex + 1, args.length).join(' ') || null;
+    console.log(event, symbol, expression, comment);
+    const regex = /^[+\-/*]/; // регулярное выражение для поиска одного из символов: +, -, /, *
 
-    const index = findCommentIndex(args.slice(symbolIndex, args.length));
-    const expression =
-      index == -1
-        ? args.length == 2
-          ? args[1]
-          : args.slice(symbolIndex).join(' ')
-        : args.slice(symbolIndex, index + symbolIndex).join(' ');
-    const comment =
-      index != -1 ? args.slice(index + symbolIndex).join(' ') : null;
-    console.log(event, symbol, evaluate(expression), comment);
-    return [event, symbol, evaluate(expression), comment];
+    if (regex.test(comment)) {
+      console.log('Строка начинается с символа +, -, / или *');
+      return [null, null, null, null];
+    } else {
+      console.log('Строка не начинается с символа +, -, / или *');
+    }
+    // const index = findCommentIndex(args.slice(symbolIndex, args.length));
+    // const expression =
+    //   index == -1
+    //     ? args.length == 2
+    //       ? args[1]
+    //       : args.slice(symbolIndex).join(' ')
+    //     : args.slice(symbolIndex, index + symbolIndex).join(' ');
+    // const comment =
+    //   index != -1 ? args.slice(index + symbolIndex).join(' ') : null;
+    // console.log(event, symbol, evaluate(expression), comment);
     // return [event, symbol, evaluate(expression), comment];
+    return [event, symbol, evaluate(expression), comment];
   } catch (e) {
     console.log(e);
     return [null, null, null, null];
