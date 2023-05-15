@@ -1,4 +1,8 @@
-const { findOrCreateGroup, updateGroup, findGroup } = require('../http/api-group');
+const {
+  findOrCreateGroup,
+  updateGroup,
+  findGroup,
+} = require('../http/api-group');
 const { v4: uuidv4 } = require('uuid');
 const { formatDate } = require('../utils');
 
@@ -20,7 +24,7 @@ module.exports = async function hCommand(bot, msg, args) {
   });
   await bot.sendMessage(
     msg.chat.id,
-    `📃 Operations history: https://office.moneyport.world/h/${hash}\n\n⚠️ Link available 30 minutes`,
+    `📃 Operations history: https://pay.moneyport.world/h/${hash}\n\n⚠️ Link available 30 minutes`,
     { parse_mode: 'HTML' }
   );
 };
