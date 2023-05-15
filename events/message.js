@@ -8,8 +8,8 @@ module.exports = async function messageEvent(bot, msg) {
   if (msg?.new_chat_member) return;
 
   // console.log(msg);
-  // console.log('Create Group from message');
-  // await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+  console.log('Create Group from message');
+  await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
   if (msg?.migrate_to_chat_id !== undefined) {
     await updateGroup(bot, msg.chat.id, { chat_id: msg?.migrate_to_chat_id });
     await bot.sendMessage(
