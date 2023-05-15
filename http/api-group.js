@@ -60,4 +60,24 @@ async function activeGroup(bot, chat_id) {
   }
 }
 
-module.exports = { findOrCreateGroup, updateGroup, activeGroup, findGroup };
+async function restoreGroup(bot, chat_id) {
+  try {
+    const response = await baseApi.post(`/group/restore/${chat_id}`);
+    return response.data;
+  } catch (error) {
+    if (error?.response?.status === 401) {
+      await bot.sendMessage(chat_id, `Неправильный API токен.`, {
+        parse_mode: 'HTML',
+      });
+    }
+    console.error(error);
+  }
+}
+
+module.exports = {
+  findOrCreateGroup,
+  updateGroup,
+  activeGroup,
+  findGroup,
+  restoreGroup,
+};

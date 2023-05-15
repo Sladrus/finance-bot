@@ -21,6 +21,7 @@ class TelegramBotApp {
     this.registerCommand('details');
     this.registerCommand('smi');
     this.registerCommand('cabinet');
+    this.registerCommand('restore');
 
     this.registerEvent('new_chat_members', this.bot);
     this.registerEvent('left_chat_member', this.bot);

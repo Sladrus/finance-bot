@@ -5,7 +5,7 @@ async function showBalances(bot, chat_id) {
     const response = await baseApi.get(`/balance/show/${chat_id}`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.log(error?.response?.data);
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat_id,
@@ -49,7 +49,7 @@ async function setBalances(
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error?.response?.data);
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
@@ -90,7 +90,7 @@ async function delBalances(bot, { chat, message_id, from }, symbol, event) {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error?.response?.data);
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
