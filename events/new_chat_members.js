@@ -23,6 +23,11 @@ function checkObjectPresence(arr1, arr2) {
 module.exports = async function newChatMemberEvent(bot, msg) {
   // console.log(msg);
   const me = await bot.getMe();
+  const memberCount = await bot.getChatMemberCount(msg.chat.id);
+  console.log(memberCount);
+  await updateGroup(bot, msg.chat.id, {
+    members_count: memberCount,
+  });
   if (me.id === msg.new_chat_member.id) {
     console.log('Create Group from invites');
     return await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
@@ -33,6 +38,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
   const group = await findGroup(bot, msg.chat.id);
   if (!group?.in_chat) {
     await updateGroup(bot, msg.chat.id, {
+      group_status: 'WORK',
       status: 1,
       in_chat: formatDate(new Date()),
     });

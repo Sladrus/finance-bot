@@ -20,9 +20,23 @@ module.exports = async function messageEvent(bot, msg) {
       }
     );
   }
-  const res = await updateGroup(bot, msg.chat.id, {
-    title: msg.chat.title,
-  });
+  console.log(msg);
+
+  const memberCount = await bot.getChatMemberCount(
+    msg?.migrate_to_chat_id !== undefined
+      ? msg?.migrate_to_chat_id
+      : msg.chat.id
+  );
+  const res = await updateGroup(
+    bot,
+    msg?.migrate_to_chat_id !== undefined
+      ? msg?.migrate_to_chat_id
+      : msg.chat.id,
+    {
+      title: msg.chat.title,
+      members_count: memberCount,
+    }
+  );
   if (msg?.text) {
     const log = await createLogs(bot, msg);
     // console.log(log);
