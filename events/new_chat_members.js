@@ -1,3 +1,4 @@
+const { createActivity } = require('../http/api-activity');
 const { getAdmins } = require('../http/api-admins');
 const { getOrder } = require('../http/api-cabinet');
 const {
@@ -24,7 +25,6 @@ module.exports = async function newChatMemberEvent(bot, msg) {
   // console.log(msg);
   const me = await bot.getMe();
   const memberCount = await bot.getChatMemberCount(msg.chat.id);
-  console.log(memberCount);
   await updateGroup(bot, msg.chat.id, {
     members_count: memberCount,
   });
@@ -43,13 +43,23 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       in_chat: formatDate(new Date()),
     });
   }
-
+  // console.log(msg);
   await bot.sendMessage(
     msg.chat.id,
     `Добро пожаловать!\n\nВы зашли в личный кабинет, здесь мы ведем учет бухгалтерии, принимаем и обрабатываем заявки, считаем курс\n\nИспользуйте команду /help чтобы получить ответы на часто задаваемые вопросы\n\nДля расчета курса опишите пожалуйста вашу задачу: куда и откуда отправляем перевод, какая сумма? После этого @moneyport_admin сориентирует вас по условиям перевода.`
   );
   const order = await getOrder(bot, msg.chat.id);
-  console.log(order);
+  const first = msg.new_chat_member?.first_name || '';
+  const last = msg.new_chat_member?.last_name || '';
+  const name = first + ' ' + last;
+  const activity = await createActivity(bot, msg.chat.id, {
+    chat_id: msg.chat.id,
+    username: msg.new_chat_member?.username,
+    first_name: name,
+    event: 'JOIN',
+    created_at: formatDate(new Date()),
+  });
+  console.log(activity);
   if (!order || !order['how_to_send']) return;
   let how_to_send;
   if (order['how_to_send'] == 'physical') {
@@ -61,7 +71,6 @@ module.exports = async function newChatMemberEvent(bot, msg) {
   if (order['how_to_send'] == 'cash') {
     how_to_send = 'Выдача наличных';
   }
-  console.log(how_to_send);
   return await bot.sendMessage(
     msg.chat.id,
     `На сайте вы указали информацию:\n1. Хотите совершить перевод: ${how_to_send}\n2. Валюта получения: ${order['symbol']}\n3. Сумма к получению: ${order['summ']}\n\nЧерез пару минут подключится менеджер и задаст уточняющие вопросы`

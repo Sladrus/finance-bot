@@ -1,3 +1,4 @@
+const { updateActivity } = require('../http/api-activity');
 const { updateGroup, findOrCreateGroup } = require('../http/api-group');
 const { createLogs } = require('../http/api-logs');
 
@@ -12,6 +13,9 @@ module.exports = async function messageEvent(bot, msg) {
   await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
   if (msg?.migrate_to_chat_id !== undefined) {
     await updateGroup(bot, msg.chat.id, { chat_id: msg?.migrate_to_chat_id });
+    await updateActivity(bot, msg.chat.id, {
+      chat_id: msg?.migrate_to_chat_id,
+    });
     await bot.sendMessage(
       msg?.migrate_to_chat_id,
       'Новый чат айди: `' + msg?.migrate_to_chat_id + '`',
