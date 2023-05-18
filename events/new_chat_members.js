@@ -55,6 +55,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
   const activity = await createActivity(bot, msg.chat.id, {
     chat_id: msg.chat.id,
     username: msg.new_chat_member?.username,
+    user_id: msg.new_chat_member?.id,
     first_name: name,
     event: 'JOIN',
     created_at: formatDate(new Date()),

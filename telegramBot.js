@@ -22,12 +22,14 @@ class TelegramBotApp {
     this.registerCommand('smi');
     this.registerCommand('cabinet');
     this.registerCommand('restore');
+    this.registerCommand('sleep');
 
     this.registerEvent('new_chat_members', this.bot);
     this.registerEvent('left_chat_member', this.bot);
     this.registerEvent('polling_error', this.bot);
     this.registerEvent('error', this.bot);
     this.registerEvent('inline_query', this.bot);
+    this.registerEvent('callback_query', this.bot);
     this.registerEvent('message', this.bot);
     this.registerEvent('new_chat_title', this.bot);
     this.registerEvent('group_chat_created', this.bot);

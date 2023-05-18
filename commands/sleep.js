@@ -1,0 +1,95 @@
+const { getAdmins } = require('../http/api-admins');
+const { findChat } = require('../http/api-chat');
+const { updateGroup, findGroup } = require('../http/api-group');
+
+function checkObjectPresenceAdmin(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    const obj1 = arr1[i];
+    for (let j = 0; j < arr2.length; j++) {
+      const obj2 = arr2[j];
+      if (obj1.id === Number(obj2.user.id)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkObjectPresence(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    const obj1 = arr1[i];
+    for (let j = 0; j < arr2.length; j++) {
+      const obj2 = arr2[j];
+      if (obj1.id === Number(obj2.tlg_user_id)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+module.exports = async function sleepCommand(bot, msg, args) {
+  if (msg.chat.type === 'private') return;
+  const me = await bot.getMe();
+  const chatAdmins = await bot.getChatAdministrators(msg.chat.id);
+  const isBotAdmin = checkObjectPresenceAdmin([me], chatAdmins);
+  if (!isBotAdmin)
+    return await bot.sendMessage(
+      msg.chat.id,
+      `Ошибка. Бот не является администратором чата.`
+    );
+  const admins = await getAdmins();
+  const isValidAdmins = checkObjectPresence([msg.from], admins);
+  if (!isValidAdmins)
+    return await bot.sendMessage(
+      msg.chat.id,
+      `Вы не можете использовать эту комманду.`
+    );
+  const chat = await findChat(bot, msg.chat.id);
+  if (!chat)
+    return await bot.sendMessage(
+      msg.chat.id,
+      'Данный чат отсутсвует в базе созданных чатов.'
+    );
+  const group = await findGroup(bot, msg.chat.id);
+  if (group.active)
+    return await bot.sendMessage(
+      msg.chat.id,
+      `Невозможно использовать эту комманду в чате с активированной кассой.`,
+      {
+        parse_mode: 'HTML',
+      }
+    );
+  if (group.group_status === 'WAIT') return;
+  await updateGroup(bot, msg.chat.id, { group_status: 'WAIT' });
+  for (const admin of admins) {
+    try {
+      await bot.banChatMember(msg.chat.id, admin.tlg_user_id);
+      console.log(`Пользователь ${admin.name} удален из чата.`);
+      await bot.unbanChatMember(msg.chat.id, admin.tlg_user_id);
+    } catch (e) {
+      console.log(
+        e?.response?.body?.error_code,
+        e?.response?.body?.description,
+        admin.name
+      );
+    }
+  }
+  const options = {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'Позвать менеджера',
+            callback_data: 'wakeup',
+          },
+        ],
+      ],
+    },
+  };
+  await bot.sendMessage(
+    msg.chat.id,
+    `Чат в спящем режиме.\n\nНажмите на кнопку ниже, чтобы позвать менеджера`,
+    options
+  );
+};
