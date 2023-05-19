@@ -20,6 +20,7 @@ function validateSymbol(arg0, arg1) {
     'USD',
     'AED',
     'USDT',
+    'USER',
     'RUB',
     'EUR',
     'CNY',
