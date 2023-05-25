@@ -1,6 +1,7 @@
 const { getAdmins } = require('../http/api-admins');
-const { findChat } = require('../http/api-chat');
+const { findChat, createChat } = require('../http/api-chat');
 const { updateGroup, findGroup } = require('../http/api-group');
+const { formatDate } = require('../utils');
 
 function checkObjectPresenceAdmin(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -45,12 +46,23 @@ module.exports = async function sleepCommand(bot, msg, args) {
       msg.chat.id,
       `Вы не можете использовать эту комманду.`
     );
-  const chat = await findChat(bot, msg.chat.id);
-  if (!chat)
-    return await bot.sendMessage(
-      msg.chat.id,
-      'Данный чат отсутсвует в базе созданных чатов.'
-    );
+  let chat = await findChat(bot, msg.chat.id);
+  if (!chat) {
+    const chat_url = await bot.exportChatInviteLink(msg.chat.id);
+
+    chat = await createChat(bot, {
+      chat_id: msg.chat.id,
+      chat_url: chat_url,
+      issued_by: 'chat',
+      date_of_issue: formatDate(new Date()),
+      active: 1,
+    });
+    console.log(chat);
+    // return await bot.sendMessage(
+    //   msg.chat.id,
+    //   'Данный чат отсутсвует в базе созданных чатов.'
+    // );
+  }
   const group = await findGroup(bot, msg.chat.id);
   if (group.active)
     return await bot.sendMessage(

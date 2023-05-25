@@ -19,8 +19,21 @@ const mainApi = axios.create({
   headers: { 'X-Api-Key': `${mainApiToken}` },
 });
 
+async function addTgLogin(bot, chat_id, tlg_login) {
+  try {
+    const response = await mainApi.get(
+      `/AddTlgLogin?chat_id=${chat_id}&tlg_login=${tlg_login}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
 module.exports = {
   baseApi,
   officeApi,
   mainApi,
+  addTgLogin,
 };

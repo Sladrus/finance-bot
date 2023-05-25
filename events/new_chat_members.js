@@ -1,3 +1,4 @@
+const { addTgLogin } = require('../http/api');
 const { createActivity } = require('../http/api-activity');
 const { getAdmins } = require('../http/api-admins');
 const { getOrder } = require('../http/api-cabinet');
@@ -60,6 +61,14 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       event: 'JOIN',
       created_at: formatDate(new Date()),
     });
+    if (msg.new_chat_member?.username) {
+      const resp = await addTgLogin(
+        bot,
+        msg.chat.id,
+        msg.new_chat_member?.username
+      );
+      console.log(resp);
+    }
     console.log(activity);
     if (!order || !order['how_to_send']) return;
     let how_to_send;

@@ -25,7 +25,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
     });
   if (result?.status === 'created')
     return await bot.editMessageText(
-      `<b>Личный кабинет создан:\n\n</b>Активировать: https://pay.moneyport.world/a/${result?.token}`,
+      `<b>Личный кабинет создан:\n\n</b>Активировать: https://moneyport.ru/a/${result?.token}`,
       {
         chat_id: msg.chat.id,
         message_id: message.message_id,
