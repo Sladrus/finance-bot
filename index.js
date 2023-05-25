@@ -38,7 +38,9 @@ const botApp = new TelegramBotApp();
 botApp.start();
 
 async function restore(bot, chat) {
+  if (!chat?.issued_by) return;
   const group = await findGroup(bot, chat.chat_id);
+  if (!group) return;
   if (group.group_status !== 'READY') return;
   const date = new Date(chat.date_of_issue);
   const aWeekAgo = new Date().getTime() - 7 * 24 * 60 * 60 * 1000;
