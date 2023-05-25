@@ -2,6 +2,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const Command = require('telegram-command-handler');
 require('dotenv').config();
 
+
+
 class TelegramBotApp {
   constructor() {
     this.botToken = process.env.BOT_TOKEN;
@@ -40,6 +42,8 @@ class TelegramBotApp {
       'currency',
       this.bot
     );
+
+    // this.job.start();
     console.log(`Telegram Bot started`);
   }
 

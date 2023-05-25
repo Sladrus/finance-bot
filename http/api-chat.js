@@ -20,6 +20,26 @@ async function findChat(bot, chat_id) {
   }
 }
 
+async function findChatWhere(bot, body) {
+  try {
+    const response = await baseApi.post(`/chat/get`, body);
+    return response.data;
+  } catch (error) {
+    console.log(error?.response?.data);
+    // if (error?.response?.status === 403) {
+    //   await bot.sendMessage(
+    //     chat_id,
+    //     'Учет кассы в этом чате не активирован. Используйте /active'
+    //   );
+    // }
+    if (error?.response?.status === 401) {
+      await bot.sendMessage(chat_id, `Неправильный API токен.`, {
+        parse_mode: 'HTML',
+      });
+    }
+  }
+}
+
 async function createChat(bot, body) {
   try {
     const response = await baseApi.post(`/chat/create`, body);
@@ -115,4 +135,5 @@ module.exports = {
   findChat,
   findWhereTaken,
   createChat,
+  findChatWhere,
 };
