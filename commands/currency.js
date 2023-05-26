@@ -4,7 +4,7 @@ const { findOrCreateGroup, findGroup } = require('../http/api-group');
 const { randomIntFromInterval, splitOnHalf } = require('../utils');
 
 function isCommand(exchange) {
-  const commands = ['active', 'chatid', 'primer'];
+  const commands = ['active', 'chatid', 'primer', 'create'];
   return commands.includes(exchange) ? exchange : null;
 }
 

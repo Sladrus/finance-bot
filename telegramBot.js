@@ -2,8 +2,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const Command = require('telegram-command-handler');
 require('dotenv').config();
 
-
-
 class TelegramBotApp {
   constructor() {
     this.botToken = process.env.BOT_TOKEN;
@@ -25,6 +23,7 @@ class TelegramBotApp {
     this.registerCommand('cabinet');
     this.registerCommand('restore');
     this.registerCommand('sleep');
+    this.registerCommand('create');
 
     this.registerEvent('new_chat_members', this.bot);
     this.registerEvent('left_chat_member', this.bot);

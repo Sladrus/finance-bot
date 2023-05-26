@@ -105,7 +105,7 @@ module.exports = async function restoreCommand(bot, msg, args) {
   try {
     await bot.setChatTitle(
       msg.chat.id,
-      `[${chat.id}] 🔵 Персональный чат-касса MoneyPort`
+      `[${chat.id}] Персональный чат-касса MoneyPort`
     );
     await bot.setChatDescription(
       msg.chat.id,
