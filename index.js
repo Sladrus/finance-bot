@@ -114,7 +114,7 @@ async function restore(bot, chat) {
   try {
     await bot.setChatTitle(
       newChat.chat_id,
-      `[${newChat.id}] 🔵 Персональный чат-касса MoneyPort`
+      `[${newChat.id}] Персональный чат-касса MoneyPort`
     );
     await bot.setChatDescription(
       newChat.chat_id,
