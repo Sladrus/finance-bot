@@ -2,6 +2,7 @@ const { getEmojiByCurrencyCode } = require('country-currency-emoji-flags');
 const { convertCurrency } = require('../http/api-convert');
 const { findOrCreateGroup, findGroup } = require('../http/api-group');
 const { randomIntFromInterval, splitOnHalf } = require('../utils');
+const { evaluate } = require('mathjs');
 
 function isCommand(exchange) {
   const commands = ['active', 'chatid', 'primer', 'create'];
@@ -37,11 +38,11 @@ module.exports = async function currencyCommand(bot, msg, match) {
     );
   const course = Number(data.course.split(' ')[0]);
   const realAmount = amount
-    ? (course / fakeAmount) * amount
+    ? (course / fakeAmount) * evaluate(amount)
     : course / fakeAmount;
 
   const fullCourse = `${
-    amount ? amount : 1
+    amount ? evaluate(amount) : 1
   } ${currencies[0].toUpperCase()} = ${realAmount.toFixed(
     4
   )} ${currencies[1].toUpperCase()}\n`;
@@ -57,7 +58,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
     `${finalCourse}\n<pre>${'--------------------'}\nupdated ${
       data.updated
     }</pre>\n<a href="https://www.xe.com/currencyconverter/convert/?Amount=${
-      amount || 1
+      amount ? evaluate(amount) : 1
     }&From=${currencies[0].toUpperCase()}&To=${currencies[1].toUpperCase()}">xe.com</a>`,
     {
       chat_id: msg.chat.id,

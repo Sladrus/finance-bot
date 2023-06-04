@@ -37,7 +37,7 @@ class TelegramBotApp {
 
     this.registerRegExpCommand(/^\/.*/, 'log_commands', this.bot);
     this.registerRegExpCommand(
-      /^\/[a-z]{3}[a-z]{3}\s?(\d+(?:\.\d+)?)*$/i,
+      /\/[a-z]{6}[ ]?\d*([+\-*\/]\d+)*%?/,
       'currency',
       this.bot
     );
