@@ -44,7 +44,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
       : course / fakeAmount;
 
     const fullCourse = `${
-      amount ? evaluate(amount) : 1
+      amount ? amount : 1
     } ${currencies[0].toUpperCase()} = ${realAmount.toFixed(
       4
     )} ${currencies[1].toUpperCase()}\n`;
