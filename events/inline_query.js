@@ -24,15 +24,8 @@ module.exports = async function inlineQueryEvent(bot, msg) {
           .format(result)
           .replaceAll(',', "'")}`,
       };
-      const InlineQueryResultsButton = {
-        text: 'Обменник',
-        web_app: { url: 'https://sladrus.github.io/finance-webapp/' },
-      };
 
-      // answerInlineQuery(inline_query_id, results, { button: JSON.parse(InlineQueryResultsButton) })
-      return bot.answerInlineQuery(msg.id, [answer], {
-        button: JSON.stringify(InlineQueryResultsButton),
-      });
+      return bot.answerInlineQuery(msg.id, [answer]);
     }
     bot.answerInlineQuery(msg.id, []);
 
