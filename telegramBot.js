@@ -36,8 +36,7 @@ class TelegramBotApp {
     this.registerEvent('group_chat_created', this.bot);
 
     this.registerRegExpCommand(/^\/.*/, 'log_commands', this.bot);
-    this.registerRegExpCommand(
-      /^\/[a-z]{6}[ ]?\d*([+\-*\/]\d+|\d*[.,]?\d+)*%?/,
+    this.registerRegExpCommand(/^\/[a-z]+(?:\s+\d+(?:-\d+%)?)?$/,
       'currency',
       this.bot
     );

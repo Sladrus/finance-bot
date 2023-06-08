@@ -5,7 +5,22 @@ const { randomIntFromInterval, splitOnHalf } = require('../utils');
 const { evaluate } = require('mathjs');
 
 function isCommand(exchange) {
-  const commands = ['active', 'chatid', 'primer', 'create'];
+  const commands = [
+    'active',
+    'chatid',
+    'primer',
+    'details',
+    'cabinet',
+    'restore',
+    'task',
+    'sleep',
+    'create',
+    'smi',
+    'h',
+    'chat',
+    'b',
+    'help',
+  ];
   return commands.includes(exchange) ? exchange : null;
 }
 
@@ -14,6 +29,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
   const amount = match[0].split(' ')[1];
   console.log(match[0]);
   if (isCommand(exchange)) return;
+  console.log(isCommand(exchange));
   if (msg.chat.type !== 'private') {
     const group = await findGroup(bot, msg.chat.id);
     if (!group) return;
