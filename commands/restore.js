@@ -109,7 +109,7 @@ module.exports = async function restoreCommand(bot, msg, args) {
     );
     await bot.setChatDescription(
       msg.chat.id,
-      `Для вас создан персональный чат с менеджерами. Для расчета курса по вашему переводу, вступайте в чат и опишите вашу задачу.`
+      `Для вас создан персональный чат с командой @moneyport: для организации перевода переходите в чат.`
     );
   } catch (e) {
     console.log(e?.response?.body?.error_code, e?.response?.body?.description);
