@@ -1,5 +1,8 @@
 const { getEmojiByCurrencyCode } = require('country-currency-emoji-flags');
-const { convertCurrency } = require('../http/api-convert');
+const {
+  convertCurrencyEx,
+  convertCurrencyMoex,
+} = require('../http/api-convert');
 const { findOrCreateGroup, findGroup } = require('../http/api-group');
 const { randomIntFromInterval, splitOnHalf } = require('../utils');
 const { evaluate } = require('mathjs');
@@ -28,6 +31,7 @@ function isCommand(exchange) {
 }
 
 module.exports = async function currencyCommand(bot, msg, match) {
+  let type;
   const exchange = match[0].split(' ')[0].replace('/', '');
   const amount = match[0].split(' ')[1];
   console.log(match[0]);
@@ -42,12 +46,20 @@ module.exports = async function currencyCommand(bot, msg, match) {
     parse_mode: 'HTML',
   });
   try {
+    currency_codes = ['EURRUB', 'EURUSD', 'USDRUB', 'CNYRUB'];
+    console.log(currency_codes.includes(exchange));
+    if (currency_codes.includes(exchange.toUpperCase())) {
+      type = 'moex';
+    } else type = 'ex';
     const currencies = splitOnHalf(exchange);
 
     const fakeAmount = randomIntFromInterval(1000, 100000);
 
     console.log(message);
-    const data = await convertCurrency(currencies, fakeAmount);
+    const data =
+      type === 'ex'
+        ? await convertCurrencyEx(currencies, fakeAmount)
+        : await convertCurrencyMoex(currencies, fakeAmount);
     if (!data)
       return await bot.editMessageText(
         `Произошла ошибка! Проверьте правильность ввода команды.`,
@@ -78,9 +90,13 @@ module.exports = async function currencyCommand(bot, msg, match) {
     await bot.editMessageText(
       `${finalCourse}\n<pre>${'--------------------'}\nupdated ${
         data.updated
-      }</pre>\n<a href="https://www.xe.com/currencyconverter/convert/?Amount=${
-        amount ? evaluate(amount) : 1
-      }&From=${currencies[0].toUpperCase()}&To=${currencies[1].toUpperCase()}">xe.com</a>`,
+      }</pre>\n${
+        type === 'ex'
+          ? `<a href="https://www.xe.com/currencyconverter/convert/?Amount=${
+              amount ? evaluate(amount) : 1
+            }&From=${currencies[0].toUpperCase()}&To=${currencies[1].toUpperCase()}">xe.com</a>`
+          : `<a href="https://www.moex.com/">moex.com</a>`
+      }`,
       {
         chat_id: msg.chat.id,
         message_id: message.message_id,

@@ -68,7 +68,7 @@ async function findWhereTaken(bot) {
   }
 }
 
-async function getEmptyChat(bot, chat_id) {
+async function getEmptyChat(bot, chat_id, username) {
   try {
     const response = await baseApi.get(`/chat/empty`);
     return response.data;

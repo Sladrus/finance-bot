@@ -1,5 +1,5 @@
 const { getEmptyChat } = require('../http/api-chat');
-const { findOrCreateGroup, findGroup } = require('../http/api-group');
+const { findGroup } = require('../http/api-group');
 
 module.exports = async function getChatCommand(bot, msg, args) {
   //МОЖЕТ ВЫЗЫВАТЬСЯ ТОЛЬКО В ОПРЕДЕЛЕННОЙ ГРУППЕ
@@ -7,7 +7,7 @@ module.exports = async function getChatCommand(bot, msg, args) {
   if (msg.chat.id != -800378415) return;
   const group = await findGroup(bot, msg.chat.id);
   if (!group) return;
-  const chat = await getEmptyChat(bot, msg.chat.id);
+  const chat = await getEmptyChat(bot, msg.chat.id, msg.from?.username);
   console.log(chat);
   if (!chat) {
     await bot.sendMessage(msg.chat.id, `Свободные чаты закончились.`, {
@@ -21,33 +21,3 @@ module.exports = async function getChatCommand(bot, msg, args) {
     );
   }
 };
-
-// const { bot } = require('../index');
-
-// const Command = require('telegram-command-handler');
-
-// const chat = new Command(bot, 'chat');
-
-// chat.on('receive', async function (msg, args) {
-//   const clientId = 'ID';
-//   const chatLink = 'ChatLink';
-//   const group = await GroupService.findOne(msg.chat.id);
-//   if (group.active === 0) {
-//     return await bot.sendMessage(
-//       msg.chat.id,
-//       'Учет кассы в этом чате не активирован. Используйте /active'
-//     );
-//   }
-//   const chat = await chatService.getEmptyChat(group.id);
-//   if (!chat) {
-//     await bot.sendMessage(msg.chat.id, `Свободные чаты закончились.`, {
-//       parse_mode: 'HTML',
-//     });
-//   } else {
-//     await bot.sendMessage(
-//       msg.chat.id,
-//       `You client ID: <b>${chat.id}</b>\n👉 Working chat: <b>${chat.chat_url}</b>`,
-//       { parse_mode: 'HTML' }
-//     );
-//   }
-// });
