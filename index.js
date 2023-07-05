@@ -135,7 +135,7 @@ async function restore(bot, chat) {
   );
 }
 
-const job = cron.schedule('0 0 * * SUN', async function () {
+const job = cron.schedule('0 0 * * *', async function () {
   // Здесь должны быть расположены нужные вам действия
   const chats = await findWhereTaken(this.bot);
   for (const chat of chats) {
