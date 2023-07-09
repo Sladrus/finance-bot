@@ -10,6 +10,7 @@ class TelegramBotApp {
 
   start() {
     this.registerCommand('b');
+    this.registerCommand('add');
     this.registerCommand('i');
     this.registerCommand('help');
     this.registerCommand('chatid');
