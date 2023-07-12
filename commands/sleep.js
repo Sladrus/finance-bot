@@ -49,7 +49,6 @@ module.exports = async function sleepCommand(bot, msg, args) {
   let chat = await findChat(bot, msg.chat.id);
   if (!chat) {
     const chat_url = await bot.exportChatInviteLink(msg.chat.id);
-
     chat = await createChat(bot, {
       chat_id: msg.chat.id,
       chat_url: chat_url,
@@ -64,14 +63,14 @@ module.exports = async function sleepCommand(bot, msg, args) {
     // );
   }
   const group = await findGroup(bot, msg.chat.id);
-  if (group.active)
-    return await bot.sendMessage(
-      msg.chat.id,
-      `Невозможно использовать эту комманду в чате с активированной кассой.`,
-      {
-        parse_mode: 'HTML',
-      }
-    );
+  // if (group.active)
+  //   return await bot.sendMessage(
+  //     msg.chat.id,
+  //     `Невозможно использовать эту комманду в чате с активированной кассой.`,
+  //     {
+  //       parse_mode: 'HTML',
+  //     }
+  //   );
   if (group.group_status === 'WAIT') return;
   await updateGroup(bot, msg.chat.id, { group_status: 'WAIT' });
   for (const admin of admins) {
