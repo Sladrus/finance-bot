@@ -31,68 +31,72 @@ function checkObjectPresence(arr1, arr2) {
 
 module.exports = async function moneysendTask(bot, msg, args) {
   if (msg.chat.type === 'private') return;
-  const chatId = msg.chat.id;
-  const me = await bot.getMe();
-  const chatAdmins = await bot.getChatAdministrators(msg.chat.id);
-  const isBotAdmin = checkObjectPresenceAdmin([me], chatAdmins);
-  if (!isBotAdmin)
-    return await bot.sendMessage(
-      msg.chat.id,
-      `Ошибка. Бот не является администратором чата.`
-    );
-  const admins = await getAdmins();
-  const isValidAdmins = checkObjectPresence([msg.from], admins);
-  if (isValidAdmins) {
-    // Отправляем сообщение с запросом точной задачи на перевод
-    await bot
-      .sendMessage(
-        chatId,
-        'Пожалуйста, сформулируйте точную задачу на перевод. Укажите, что клиент отдает → получает, какой объем, когда требуется перевод и с какой регулярность?'
-      )
-      .then(() => {
-        // Создаем слушатель для обычных текстовых сообщений
-        const textListener = async (msg) => {
-          const admins = await getAdmins();
-          const isValidAdmins = checkObjectPresence([msg.from], admins);
-          if (isValidAdmins) {
-            const group = await findGroup(bot, msg.chat.id);
-            const response = await createMoneysend(bot, {
-              chat_id: msg.chat.id,
-              task: msg.text,
-              manager_id: msg.from.id,
-              create_date: Date.now(),
-            });
-            const chat = await findChat(bot, msg.chat.id);
-            await bot.sendMessage(
-              chatId,
-              `Отлично! Задача зарегестрированна под номером <b>${response.id}</b>, уже зову специалиста отдела процессинга. Пожалуйста, ожидайте.`,
-              {
-                parse_mode: 'HTML',
-              }
-            );
-            await bot.sendMessage(
-              -1001935148888,
-              `Добавлена новая задача <b>Moneysend!</b>\n\n${msg.text}\n\n${group.title}\nChat ID: ${msg.chat.id}\nСсылка на чат: ${chat.chat_url}`,
-              {
-                parse_mode: 'HTML',
-              }
-            );
-            bot.removeListener('text', textListener);
-          } else {
-            await bot.sendMessage(
-              chatId,
-              'Извините, задачи принимаем только от аккаунтов менеджеров.'
-            );
-          }
-        };
+  try {
+    const chatId = msg.chat.id;
+    const me = await bot.getMe();
+    const chatAdmins = await bot.getChatAdministrators(msg.chat.id);
+    const isBotAdmin = checkObjectPresenceAdmin([me], chatAdmins);
+    if (!isBotAdmin)
+      return await bot.sendMessage(
+        msg.chat.id,
+        `Ошибка. Бот не является администратором чата.`
+      );
+    const admins = await getAdmins();
+    const isValidAdmins = checkObjectPresence([msg.from], admins);
+    if (isValidAdmins) {
+      // Отправляем сообщение с запросом точной задачи на перевод
+      await bot
+        .sendMessage(
+          chatId,
+          'Пожалуйста, сформулируйте точную задачу на перевод. Укажите, что клиент отдает → получает, какой объем, когда требуется перевод и с какой регулярность?'
+        )
+        .then(() => {
+          // Создаем слушатель для обычных текстовых сообщений
+          const textListener = async (msg) => {
+            const admins = await getAdmins();
+            const isValidAdmins = checkObjectPresence([msg.from], admins);
+            if (isValidAdmins) {
+              const group = await findGroup(bot, msg.chat.id);
+              const response = await createMoneysend(bot, {
+                chat_id: msg.chat.id,
+                task: msg.text,
+                manager_id: msg.from.id,
+                create_date: Date.now(),
+              });
+              const chat = await findChat(bot, msg.chat.id);
+              await bot.sendMessage(
+                chatId,
+                `Отлично! Задача зарегестрированна под номером <b>${response.id}</b>, уже зову специалиста отдела процессинга. Пожалуйста, ожидайте.`,
+                {
+                  parse_mode: 'HTML',
+                }
+              );
+              await bot.sendMessage(
+                -1001935148888,
+                `Добавлена новая задача <b>Moneysend!</b>\n\n${msg.text}\n\n${group.title}\nChat ID: ${msg.chat.id}\nСсылка на чат: ${chat?.chat_url}`,
+                {
+                  parse_mode: 'HTML',
+                }
+              );
+              bot.removeListener('text', textListener);
+            } else {
+              await bot.sendMessage(
+                chatId,
+                'Извините, задачи принимаем только от аккаунтов менеджеров.'
+              );
+            }
+          };
 
-        bot.on('text', textListener);
-      });
-  } else {
-    // Если сообщение отправлено от неразрешенного пользователя, отправляем предупреждение
-    await bot.sendMessage(
-      chatId,
-      'Извините, задачи принимаем только от аккаунтов менеджеров.'
-    );
+          bot.on('text', textListener);
+        });
+    } else {
+      // Если сообщение отправлено от неразрешенного пользователя, отправляем предупреждение
+      await bot.sendMessage(
+        chatId,
+        'Извините, задачи принимаем только от аккаунтов менеджеров.'
+      );
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
