@@ -53,6 +53,8 @@ module.exports = async function moneysendTask(bot, msg, args) {
         .then(() => {
           // Создаем слушатель для обычных текстовых сообщений
           const textListener = async (msg) => {
+            const isSameChat = msg.chat.id === chatId;
+            if (!isSameChat) return;
             const admins = await getAdmins();
             const isValidAdmins = checkObjectPresence([msg.from], admins);
             if (isValidAdmins) {
