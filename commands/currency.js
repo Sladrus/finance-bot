@@ -26,15 +26,17 @@ function isCommand(exchange) {
     'chat',
     'b',
     'help',
+    'moneys',
   ];
   return commands.includes(exchange) ? exchange : null;
 }
 
 module.exports = async function currencyCommand(bot, msg, match) {
+  // console.log(match);
   let type;
   const exchange = match[0].split(' ')[0].replace('/', '');
   const amount = match[0].split(' ')[1];
-  console.log(match[0]);
+  console.log(exchange);
   if (isCommand(exchange)) return;
   console.log(isCommand(exchange));
   if (msg.chat.type !== 'private') {
