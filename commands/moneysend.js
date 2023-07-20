@@ -75,9 +75,24 @@ module.exports = async function moneysendTask(bot, msg, args) {
                   parse_mode: 'HTML',
                 }
               );
+              var timestamp = response.create_date;
+
+              // Преобразуем таймстамп в объект даты
+              var date = new Date(timestamp);
+
+              // Определяем необходимый формат даты (например, 'dd.mm.yyyy')
+              var formatOptions = {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+              };
+              var formattedDate = date.toLocaleDateString(
+                'ru-RU',
+                formatOptions
+              );
               await bot.sendMessage(
                 -1001815632960,
-                `${group.title} от @${msg.from?.username}\n\n→ ${chat?.chat_url}\n\nЗадача:\n<pre>${msg.text}</pre>\n\n———\nChat ID: ${msg.chat.id}\nДата: ${formatDate(response.create_date)}`,
+                `${group.title} от @${msg.from?.username}\n\n→ ${chat?.chat_url}\n\nЗадача:\n<pre>${msg.text}</pre>\n\n———\nChat ID: ${msg.chat.id}\nДата: ${formattedDate}`,
                 {
                   parse_mode: 'HTML',
                 }
