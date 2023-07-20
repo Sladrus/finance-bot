@@ -2,6 +2,7 @@ const { getAdmins } = require('../http/api-admins');
 const { findChat } = require('../http/api-chat');
 const { findGroup } = require('../http/api-group');
 const { createMoneysend } = require('../http/api-task');
+const { formatDate } = require('../utils');
 
 function checkObjectPresenceAdmin(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -76,7 +77,7 @@ module.exports = async function moneysendTask(bot, msg, args) {
               );
               await bot.sendMessage(
                 -1001815632960,
-                `${group.title} от @${msg.from?.username}\n\n→ ${chat?.chat_url}\n\nЗадача:\n<pre>${msg.text}</pre>\n\n———\nChat ID: ${msg.chat.id}\nДата: ${response.create_date}`,
+                `${group.title} от @${msg.from?.username}\n\n→ ${chat?.chat_url}\n\nЗадача:\n<pre>${msg.text}</pre>\n\n———\nChat ID: ${msg.chat.id}\nДата: ${formatDate(response.create_date)}`,
                 {
                   parse_mode: 'HTML',
                 }
