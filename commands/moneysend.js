@@ -76,7 +76,7 @@ module.exports = async function moneysendTask(bot, msg, args) {
               );
               await bot.sendMessage(
                 -1001815632960,
-                `Добавлена новая задача <b>Moneysend!</b>\n\n${msg.text}\n\n${group.title}\nChat ID: ${msg.chat.id}\nСсылка на чат: ${chat?.chat_url}`,
+                `${group.title} от ${msg.from?.username}\n\n→ ${chat?.chat_url}\n\nЗадача:\n\`${msg.text}\`\n\n———\nChat ID: ${msg.chat.id}\nДата: ${response.create_date}`,
                 {
                   parse_mode: 'HTML',
                 }
