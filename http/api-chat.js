@@ -91,6 +91,7 @@ async function getEmptyChat(bot, chat_id, username) {
 async function restoreLkChat(bot, chat_id) {
   try {
     const response = await mainApi.get(`/ChatRestore?chat_id=${chat_id}`);
+    console.log(response);
     return response.data;
   } catch (error) {
     await bot.sendMessage(chat_id, `Произошла неизвестная ошибка.`, {

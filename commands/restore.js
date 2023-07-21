@@ -76,7 +76,10 @@ module.exports = async function restoreCommand(bot, msg, args) {
         parse_mode: 'HTML',
       }
     );
+  console.log(isValidAdmins);
   const data = await restoreLkChat(bot, msg.chat.id);
+  console.log(data);
+
   if (!data)
     return await bot.editMessageText('Произошла непредвиденная ошибка', {
       chat_id: msg.chat.id,
