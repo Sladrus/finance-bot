@@ -21,6 +21,7 @@ function isCommand(exchange) {
     'task',
     'sleep',
     'create',
+    'createanna',
     'smi',
     'h',
     'chat',

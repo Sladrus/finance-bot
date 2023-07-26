@@ -26,6 +26,7 @@ class TelegramBotApp {
     this.registerCommand('restore');
     this.registerCommand('sleep');
     this.registerCommand('create');
+    this.registerCommand('createanna');
     this.registerCommand('moneysend');
 
     this.registerEvent('new_chat_members', this.bot);
