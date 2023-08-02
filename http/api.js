@@ -10,7 +10,7 @@ const baseApi = axios.create({
 });
 
 const officeApi = axios.create({
-  baseURL: 'http://moneyport.ru/office',
+  baseURL: 'http://app.moneyport.ru/office',
   headers: { 'x-api-key': `${token}` },
 });
 
