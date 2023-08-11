@@ -28,6 +28,12 @@ function isCommand(exchange) {
     'b',
     'help',
     'moneys',
+    'timetaken',
+    'timeta',
+    'howcreatetask',
+    'howcre',
+    'example',
+    'exampl',
   ];
   return commands.includes(exchange) ? exchange : null;
 }

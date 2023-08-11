@@ -8,6 +8,7 @@ const {
   findGroup,
 } = require('../http/api-group');
 const { formatDate } = require('../utils');
+const moment = require('moment');
 
 function checkObjectPresence(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -45,9 +46,35 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       });
     }
     // console.log(msg);
+    const now = moment();
+    const formattedDateTime = now.format('DD.MM HH:mm');
+    const weekday = now.locale('ru').format('dddd');
+
+    const isWeekday = now.isoWeekday() >= 1 && now.isoWeekday() <= 5;
+    const isWorkingTime = now.isBetween(
+      moment().set({ hour: 9, minute: 0 }),
+      moment().set({ hour: 22, minute: 0 })
+    );
+
+    const options = {
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Открыть меню',
+              callback_data: 'menu',
+            },
+          ],
+        ],
+      },
+    };
     await bot.sendMessage(
       msg.chat.id,
-      `Добро пожаловать!\n\nВы зашли в личный кабинет, здесь мы ведем учет бухгалтерии, принимаем и обрабатываем заявки, считаем курс\n\nИспользуйте команду /help чтобы получить ответы на часто задаваемые вопросы\n\nДля расчета курса опишите пожалуйста вашу задачу: куда и откуда отправляем перевод, какая сумма? После этого @moneyport_admin сориентирует вас по условиям перевода.`
+      `<b>Отлично!</b>\n\nТеперь вы пользователь MoneyPort, а этот чат — основной инструмент для решения ваших финансовых задач.\n\nМенеджеры MoneyPort активно отвечают на сообщения в будние дни с 09:00 до 22:00, а в выходные и праздники по возможности.\n\nСейчас у нас: ${weekday}, ${formattedDateTime}, мы ${
+        isWorkingTime ? 'работаем' : 'не работаем'
+      }.\n\nУзнайте больше о MP и получите ответы на все популярные вопросы, переходите в /menu`,
+      options
     );
     const order = await getOrder(bot, msg.chat.id);
     const first = msg.new_chat_member?.first_name || '';

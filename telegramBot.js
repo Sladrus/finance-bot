@@ -22,10 +22,19 @@ class TelegramBotApp {
     this.registerCommand('primer');
     this.registerCommand('details');
     this.registerCommand('smi');
+    this.registerCommand('menu');
+    this.registerCommand('trust');
+    this.registerCommand('timetaken');
+
     this.registerCommand('cabinet');
     this.registerCommand('restore');
     this.registerCommand('sleep');
     this.registerCommand('create');
+    this.registerCommand('fees');
+    this.registerCommand('howcreatetask');
+    this.registerCommand('tech');
+    this.registerCommand('example');
+
     this.registerCommand('createanna');
     this.registerCommand('moneysend');
 
