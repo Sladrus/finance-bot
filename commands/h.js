@@ -24,7 +24,7 @@ module.exports = async function hCommand(bot, msg, args) {
   });
   await bot.sendMessage(
     msg.chat.id,
-    `📃 Operations history: https://moneyport.ru/h/${hash}\n\n⚠️ Link available 30 minutes`,
+    `📃 Operations history: https://app.moneyport.ru/h/${hash}\n\n⚠️ Link available 30 minutes`,
     { parse_mode: 'HTML' }
   );
 };
