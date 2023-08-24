@@ -20,7 +20,6 @@ function validateSymbol(arg0, arg1) {
     'USD',
     'AED',
     'USDT',
-    'USER',
     'RUB',
     'EUR',
     'CNY',
@@ -30,8 +29,10 @@ function validateSymbol(arg0, arg1) {
     'CAD',
     'THB',
     'GRX',
+    'JPY',
+    'KRW',
   ];
-  const events = ['SP', 'IN', 'OUT', 'DEL'];
+  const events = ['SP', 'IN', 'OUT', 'DEL', 'ADV'];
   const event = events.includes(arg0.toUpperCase()) ? arg0.toLowerCase() : null;
   if (event) {
     const symbol = arg1.toUpperCase();
