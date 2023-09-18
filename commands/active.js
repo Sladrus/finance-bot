@@ -1,5 +1,9 @@
 const { getAdmins } = require('../http/api-admins');
 const { findOrCreateGroup, activeGroup } = require('../http/api-group');
+const {
+  InlineKeyboardMarkup,
+  InlineKeyboardButton,
+} = require('node-telegram-bot-api');
 
 function checkObjectPresence(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -34,8 +38,19 @@ module.exports = async function activeCommand(bot, msg, args) {
       msg.chat.id,
       'Вы не можете использовать эту команду.'
     );
-  const { result } = await activeGroup(bot, msg.chat.id);
-  if (!result)
-    return await bot.sendMessage(msg.chat.id, 'Код активации неверный');
-  return await bot.sendMessage(msg.chat.id, 'Учет кассы активирован');
+
+  await bot.sendMessage(msg.chat.id, 'Пожалуйста, укажите город', {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: 'Москва', callback_data: 'city_moscow' }],
+        [{ text: 'Санкт-Петербург', callback_data: 'city_spb' }],
+        [{ text: 'Владивосток', callback_data: 'city_vladivostok' }],
+        [{ text: 'Другой', callback_data: 'city_other' }],
+      ],
+    },
+  });
+  // const { result } = await activeGroup(bot, msg.chat.id);
+  // if (!result)
+  //   return await bot.sendMessage(msg.chat.id, 'Код активации неверный');
+  // return await bot.sendMessage(msg.chat.id, 'Учет кассы активирован');
 };

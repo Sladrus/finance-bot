@@ -35,6 +35,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       return await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
     }
     const admins = await getAdmins();
+    console.log(msg.new_chat_members, admins);
     const isAdmin = checkObjectPresence(msg.new_chat_members, admins);
     if (isAdmin) return;
     const group = await findGroup(bot, msg.chat.id);

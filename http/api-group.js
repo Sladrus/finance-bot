@@ -46,9 +46,9 @@ async function updateGroup(bot, chat_id, body) {
   }
 }
 
-async function activeGroup(bot, chat_id) {
+async function activeGroup(bot, chat_id, body) {
   try {
-    const response = await baseApi.post(`/group/active/${chat_id}`);
+    const response = await baseApi.post(`/group/active/${chat_id}`, body);
     return response.data;
   } catch (error) {
     if (error?.response?.status === 401) {
