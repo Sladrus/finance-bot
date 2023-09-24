@@ -42,6 +42,8 @@ class TelegramBotApp {
     this.registerEvent('left_chat_member', this.bot);
     this.registerEvent('polling_error', this.bot);
     this.registerEvent('error', this.bot);
+    this.registerEvent('voice', this.bot);
+
     this.registerEvent('inline_query', this.bot);
     this.registerEvent('callback_query', this.bot);
     this.registerEvent('message', this.bot);
