@@ -37,6 +37,6 @@ module.exports = async function voiceEvent(bot, msg) {
       reply_to_message_id: msg.message_id,
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
