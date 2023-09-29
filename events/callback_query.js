@@ -108,6 +108,7 @@ module.exports = async function callbackQueryEvent(bot, query) {
       await updateGroup(bot, msg.chat.id, {
         city: callbackData.split('_')[1],
       });
+      await bot.deleteMessage(msg.chat.id, msg.message_id);
       await bot.sendMessage(msg.chat.id, 'Город установлен');
     }
   }
