@@ -1,6 +1,11 @@
 const { getAdmins } = require('../http/api-admins');
 const { findChat } = require('../http/api-chat');
-const { findGroup, updateGroup, activeGroup } = require('../http/api-group');
+const {
+  findGroup,
+  updateGroup,
+  activeGroup,
+  findOrCreateGroup,
+} = require('../http/api-group');
 
 function checkObjectPresence(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -78,6 +83,8 @@ module.exports = async function callbackQueryEvent(bot, query) {
   }
 
   if (callbackData.startsWith('city')) {
+    const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
+    if (!group) return;
     console.log(callbackData.split('_')[1]);
     const admins = await getAdmins();
     console.log(admins, query);
@@ -88,13 +95,21 @@ module.exports = async function callbackQueryEvent(bot, query) {
         msg.chat.id,
         'Вы не можете использовать эту команду'
       );
-    const { result } = await activeGroup(bot, msg.chat.id, {
-      city: callbackData.split('_')[1],
-    });
-    if (!result)
-      return await bot.sendMessage(msg.chat.id, 'Код активации неверный');
-    await bot.deleteMessage(msg.chat.id, msg.message_id);
-    await bot.sendMessage(msg.chat.id, 'Учет кассы активирован');
+    if (group?.active === 0) {
+      const { result } = await activeGroup(bot, msg.chat.id, {
+        city: callbackData.split('_')[1],
+      });
+
+      if (!result)
+        return await bot.sendMessage(msg.chat.id, 'Код активации неверный');
+      await bot.deleteMessage(msg.chat.id, msg.message_id);
+      await bot.sendMessage(msg.chat.id, 'Учет кассы активирован');
+    } else {
+      await updateGroup(bot, msg.chat.id, {
+        city: callbackData.split('_')[1],
+      });
+      await bot.sendMessage(msg.chat.id, 'Город установлен');
+    }
   }
   return await bot.answerCallbackQuery(query.id);
 };
