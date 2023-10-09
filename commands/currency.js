@@ -63,12 +63,13 @@ module.exports = async function currencyCommand(bot, msg, match) {
     const currencies = splitOnHalf(exchange);
 
     const fakeAmount = randomIntFromInterval(1000, 100000);
+    console.log(fakeAmount);
 
-    console.log(message);
     const data =
       type === 'ex'
         ? await convertCurrencyEx(currencies, fakeAmount)
         : await convertCurrencyMoex(currencies, fakeAmount);
+    console.log(data);
     if (!data)
       return await bot.editMessageText(
         `Произошла ошибка! Проверьте правильность ввода команды.`,
@@ -82,7 +83,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
     const realAmount = amount
       ? (course / fakeAmount) * evaluate(amount)
       : course / fakeAmount;
-
+    console.log(realAmount);
     const fullCourse = `${
       amount ? amount : 1
     } ${currencies[0].toUpperCase()} = ${realAmount.toFixed(
