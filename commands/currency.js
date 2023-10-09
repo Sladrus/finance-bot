@@ -66,7 +66,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
       currencies[1].toUpperCase() === 'UAH'
     ) {
       return await bot.editMessageText(
-        `Произошла ошибка! Проверьте правильность ввода команды.`,
+        `Мы не поддерживаем работу с данной валютой.`,
         {
           chat_id: msg.chat.id,
           message_id: message.message_id,
