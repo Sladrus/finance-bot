@@ -12,7 +12,6 @@ function validateSymbol(arg0) {
     'EUR',
     'CNY',
     'GBP',
-    'UAH',
     'TRY',
     'CAD',
     'THB',
