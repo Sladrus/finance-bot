@@ -61,7 +61,19 @@ module.exports = async function currencyCommand(bot, msg, match) {
       type = 'moex';
     } else type = 'ex';
     const currencies = splitOnHalf(exchange);
-
+    if (
+      currencies[0].toUpperCase() === 'UAH' ||
+      currencies[1].toUpperCase() === 'UAH'
+    ) {
+      return await bot.editMessageText(
+        `Произошла ошибка! Проверьте правильность ввода команды.`,
+        {
+          chat_id: msg.chat.id,
+          message_id: message.message_id,
+          parse_mode: 'HTML',
+        }
+      );
+    }
     const fakeAmount = randomIntFromInterval(1000, 100000);
     console.log(fakeAmount);
 
