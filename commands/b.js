@@ -100,6 +100,14 @@ const showBalance = async (bot, chatId) => {
 
 const setBalance = async (bot, msg, args) => {
   const [event, symbol, value, comment] = validateArgs(args);
+  console.log(event, symbol, Number(value), comment, 'TYT');
+  if (isNaN(Number(value))) {
+    return await bot.sendMessage(
+      msg.chat.id,
+      `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
+      { parse_mode: 'HTML' }
+    );
+  }
   if (symbol === null || value === undefined)
     return await bot.sendMessage(
       msg.chat.id,
