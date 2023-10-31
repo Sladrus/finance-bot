@@ -34,8 +34,9 @@ class TelegramBotApp {
     this.registerCommand('howcreatetask');
     this.registerCommand('tech');
     this.registerCommand('city');
-    this.registerCommand('example');
+    this.registerCommand('review');
 
+    this.registerCommand('example');
     this.registerCommand('createanna');
     this.registerCommand('moneysend');
 

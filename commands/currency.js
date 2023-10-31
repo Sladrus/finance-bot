@@ -34,6 +34,7 @@ function isCommand(exchange) {
     'howcre',
     'example',
     'exampl',
+    'review',
   ];
   return commands.includes(exchange) ? exchange : null;
 }
