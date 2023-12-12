@@ -14,6 +14,11 @@ const officeApi = axios.create({
   headers: { 'x-api-key': `${token}` },
 });
 
+const botApi = axios.create({
+  baseURL: 'http://app.moneyport.ru/bot',
+  headers: { 'x-api-key': `${token}` },
+});
+
 const mainApi = axios.create({
   baseURL: 'http://api.moneyport.world',
   headers: { 'X-Api-Key': `${mainApiToken}` },
@@ -33,6 +38,7 @@ async function addTgLogin(bot, chat_id, tlg_login) {
 
 module.exports = {
   baseApi,
+  botApi,
   officeApi,
   mainApi,
   addTgLogin,
