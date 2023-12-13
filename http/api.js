@@ -2,7 +2,9 @@ require('dotenv').config();
 const axios = require('axios');
 
 const token = process.env.API_TOKEN;
-const mainApiToken = '994f4ca3371792beeb727761c6b831dfc410f6a4';
+const officeToken = process.env.OFFICE_TOKEN;
+
+// const mainApiToken = '994f4ca3371792beeb727761c6b831dfc410f6a4';
 
 const baseApi = axios.create({
   baseURL: process.env.API_URL,
@@ -16,12 +18,12 @@ const officeApi = axios.create({
 
 const botApi = axios.create({
   baseURL: 'http://app.moneyport.ru/bot',
-  headers: { 'x-api-key': `${token}` },
+  headers: { 'X-Api-Key': `${officeToken}` },
 });
 
 const mainApi = axios.create({
   baseURL: 'http://api.moneyport.world',
-  headers: { 'X-Api-Key': `${mainApiToken}` },
+  headers: { 'X-Api-Key': `${officeToken}` },
 });
 
 async function addTgLogin(bot, chat_id, tlg_login) {
