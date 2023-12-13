@@ -77,7 +77,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       options
     );
     const order = await getOrder(bot, msg.chat.id);
-    console.log(order);
+    console.log('ORDER', order);
     const first = msg.new_chat_member?.first_name || '';
     const last = msg.new_chat_member?.last_name || '';
     const name = first + ' ' + last;
