@@ -77,6 +77,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       options
     );
     const order = await getOrder(bot, msg.chat.id);
+    console.log(order);
     const first = msg.new_chat_member?.first_name || '';
     const last = msg.new_chat_member?.last_name || '';
     const name = first + ' ' + last;
@@ -94,19 +95,23 @@ module.exports = async function newChatMemberEvent(bot, msg) {
         msg.chat.id,
         msg.new_chat_member?.username
       );
-      console.log(resp);
     }
-    console.log(activity);
     if (!order || !order['how_to_send']) return;
     let how_to_send;
     if (order['how_to_send'] == 'physical') {
-      how_to_send = 'Перевод физическому лицу';
+      how_to_send = 'Перевод физ. лицу';
     }
-    if (order['how_to_send'] == 'invoice') {
-      how_to_send = 'Оплата инвойса юридическому лицу';
+    if (order['how_to_send'] == 'company') {
+      how_to_send = 'Перевод юр. лицу';
     }
     if (order['how_to_send'] == 'cash') {
       how_to_send = 'Выдача наличных';
+    }
+    if (order['how_to_send'] == 'from_abroad') {
+      how_to_send = 'Прием из-за рубежа';
+    }
+    if (order['how_to_send'] == 'exchange') {
+      how_to_send = 'Обмен криптовалют';
     }
     return await bot.sendMessage(
       msg.chat.id,
