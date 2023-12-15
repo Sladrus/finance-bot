@@ -1,5 +1,4 @@
 const { default: axios } = require('axios');
-const fs = require('fs');
 require('dotenv').config();
 
 module.exports = async function voiceEvent(bot, msg) {

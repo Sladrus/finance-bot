@@ -58,8 +58,6 @@ class TelegramBotApp {
       'currency',
       this.bot
     );
-    // /^\/[a-z]{6}[ ]?\d*([+\-*\/]\d+|\d*[.]?\d+)*%?/
-    // this.job.start();
     console.log(`Telegram Bot started`);
   }
 
