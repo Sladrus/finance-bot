@@ -1,5 +1,7 @@
 const { getAdmins } = require('../http/api-admins');
 const { findChat } = require('../http/api-chat');
+const { activeUserInYm } = require('../http/api');
+
 const {
   findGroup,
   updateGroup,
@@ -99,6 +101,10 @@ module.exports = async function callbackQueryEvent(bot, query) {
       const { result } = await activeGroup(bot, msg.chat.id, {
         city: callbackData.split('_')[1],
       });
+      console.log(group);
+      if (group?.ym_client_id) {
+        await activeUserInYm(msg.chat.id, group?.ym_client_id);
+      }
 
       if (!result)
         return await bot.sendMessage(msg.chat.id, 'Код активации неверный');
