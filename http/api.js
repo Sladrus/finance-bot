@@ -90,7 +90,7 @@ async function activeUserInYm(chat_id, client_id) {
     const form = new FormData();
     form.append('file', await createBlobFromFile(filePath), 'data.csv');
     const response = await ymApi.post(
-      `/cdp/api/v1/counter/92731458/data/simple_orders?merge_mode=SAVE`,
+      `/cdp/api/v1/counter/92731458/data/simple_orders?merge_mode=UPDATE`,
       form,
     );
 
