@@ -1,3 +1,2 @@
-id,create_date_time,client_ids,order_status
-sp_110101,27.12.2023,1703692438535578746,PAID
-sp_110102,27.12.2023,1703690581593896083,PAID
+id,create_date_time,client_ids
+sp_110101,27.12.2023,1703692438535578746
