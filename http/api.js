@@ -38,6 +38,10 @@ const ymApi = axios.create({
   },
 });
 
+const linkApi = axios.create({
+  baseURL: 'http://link.1210059-cn07082.tw1.ru',
+});
+
 function formatDate(date) {
   let day = date.getDate();
   let month = date.getMonth() + 1; // Месяцы начинаются с 0
@@ -55,14 +59,24 @@ async function createBlobFromFile(path) {
   return new Blob([file]);
 }
 
-async function addTgLogin(bot, chat_id, tlg_login) {
+async function addTgLogin(bot, chat_id, tlg_login, links) {
   try {
     const response = await mainApi.post(
-      `/AddTlgLogin?chat_id=${chat_id}&tlg_login=${tlg_login}`
+      `/AddTlgLogin?chat_id=${chat_id}&tlg_login=${tlg_login}`,
+      links
     );
     return response.data;
   } catch (error) {
     console.error(error);
+    return;
+  }
+}
+
+async function getLinkByUser(userId) {
+  try {
+    const response = await linkApi.get(`/link?userId=${userId}`);
+    return response.data;
+  } catch (error) {
     return;
   }
 }
@@ -109,4 +123,5 @@ module.exports = {
   addTgLogin,
   ymApi,
   activeUserInYm,
+  getLinkByUser,
 };
