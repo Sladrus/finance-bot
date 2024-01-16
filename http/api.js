@@ -27,7 +27,7 @@ const botApi = axios.create({
 });
 
 const mainApi = axios.create({
-  baseURL: 'http://api.moneyport.world',
+  baseURL: 'https://api.moneyport.world',
   headers: { 'X-Api-Key': `${mainApiToken}` },
 });
 
