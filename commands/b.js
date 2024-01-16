@@ -56,21 +56,10 @@ function validateArgs(args) {
     } else {
       console.log('Строка не начинается с символа +, -, / или *');
     }
-    // const index = findCommentIndex(args.slice(symbolIndex, args.length));
-    // const expression =
-    //   index == -1
-    //     ? args.length == 2
-    //       ? args[1]
-    //       : args.slice(symbolIndex).join(' ')
-    //     : args.slice(symbolIndex, index + symbolIndex).join(' ');
-    // const comment =
-    //   index != -1 ? args.slice(index + symbolIndex).join(' ') : null;
-    // console.log(event, symbol, evaluate(expression), comment);
-    // return [event, symbol, evaluate(expression), comment];
-    return [event, symbol, evaluate(expression), comment];
+    return [event, symbol, evaluate(expression), comment, expression];
   } catch (e) {
     console.log(e);
-    return [null, null, null, null];
+    return [null, null, null, null, null];
   }
 }
 
@@ -99,7 +88,7 @@ const showBalance = async (bot, chatId) => {
 };
 
 const setBalance = async (bot, msg, args) => {
-  const [event, symbol, value, comment] = validateArgs(args);
+  const [event, symbol, value, comment, expression] = validateArgs(args);
   console.log(event, symbol, Number(value), comment, 'TYT');
   if (isNaN(Number(value))) {
     return await bot.sendMessage(
@@ -114,7 +103,7 @@ const setBalance = async (bot, msg, args) => {
       `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
       { parse_mode: 'HTML' }
     );
-  const balance = await setBalances(bot, msg, event, symbol, value, comment);
+  const balance = await setBalances(bot, msg, event, symbol, value, comment, expression);
   if (balance === undefined) return;
   console.log(balance);
   await bot.sendMessage(
