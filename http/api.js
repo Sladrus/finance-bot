@@ -57,7 +57,7 @@ async function createBlobFromFile(path) {
 
 async function addTgLogin(bot, chat_id, tlg_login) {
   try {
-    const response = await mainApi.get(
+    const response = await mainApi.post(
       `/AddTlgLogin?chat_id=${chat_id}&tlg_login=${tlg_login}`
     );
     return response.data;
