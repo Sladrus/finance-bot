@@ -1,4 +1,4 @@
-const { addTgLogin, getLinkByUser } = require('../http/api');
+const { addTgLogin, getLinkByUser, addLinksToGroup } = require('../http/api');
 const { createActivity } = require('../http/api-activity');
 const { getAdmins } = require('../http/api-admins');
 const { getOrder } = require('../http/api-cabinet');
@@ -91,7 +91,8 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       created_at: formatDate(new Date()),
     });
     const links = await getLinkByUser(msg.new_chat_member.id);
-    const resp = await addTgLogin(
+    await addLinksToGroup(msg.chat.id, links);
+    await addTgLogin(
       bot,
       msg.chat.id,
       msg.new_chat_member?.username || 'Username',
