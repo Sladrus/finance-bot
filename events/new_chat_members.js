@@ -91,7 +91,7 @@ module.exports = async function newChatMemberEvent(bot, msg) {
       created_at: formatDate(new Date()),
     });
     const links = await getLinkByUser(msg.new_chat_member.id);
-    await addLinksToGroup(msg.chat.id, links);
+    // await addLinksToGroup(msg.chat.id, links);
     await addTgLogin(
       bot,
       msg.chat.id,
