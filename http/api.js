@@ -59,6 +59,19 @@ async function createBlobFromFile(path) {
   return new Blob([file]);
 }
 
+async function addLinksToGroup(chat_id, links) {
+  try {
+    const response = await mainApi.post(
+      `/telegram/add-invite?chat_id=${chat_id}`,
+      links
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
 async function addTgLogin(bot, chat_id, tlg_login, links) {
   try {
     const response = await mainApi.post(
@@ -124,4 +137,5 @@ module.exports = {
   ymApi,
   activeUserInYm,
   getLinkByUser,
+  addLinksToGroup,
 };
