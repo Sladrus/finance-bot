@@ -61,18 +61,18 @@ async function createBlobFromFile(path) {
 https://api.moneyport.world
 
 
-async function addTgLogin(bot, chat_id, tlg_login, links) {
-  try {
-    const response = await mainApi.post(
-      `/AddTlgLogin?chat_id=${chat_id}&tlg_login=${tlg_login}`,
-      links
-    );
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
-}
+// async function addTgLogin(bot, chat_id, tlg_login, links) {
+//   try {
+//     const response = await mainApi.post(
+//       `/AddTlgLogin?chat_id=${chat_id}&tlg_login=${tlg_login}`,
+//       links
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     return;
+//   }
+// }
 
 
 

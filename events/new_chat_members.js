@@ -92,12 +92,12 @@ module.exports = async function newChatMemberEvent(bot, msg) {
     });
     const links = await getLinkByUser(msg.new_chat_member.id);
     // await addLinksToGroup(msg.chat.id, links);
-    await addTgLogin(
-      bot,
-      msg.chat.id,
-      msg.new_chat_member?.username || 'Username',
-      links
-    );
+    // await addTgLogin(
+    //   bot,
+    //   msg.chat.id,
+    //   msg.new_chat_member?.username || 'Username',
+    //   links
+    // );
 
     if (!order || !order['how_to_send']) return;
     let how_to_send;
