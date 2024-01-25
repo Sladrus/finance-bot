@@ -39,6 +39,7 @@ class TelegramBotApp {
     this.registerCommand('example');
     this.registerCommand('createanna');
     this.registerCommand('moneysend');
+    this.registerCommand('check');
 
     this.registerEvent('new_chat_members', this.bot);
     this.registerEvent('left_chat_member', this.bot);

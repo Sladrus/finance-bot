@@ -53,6 +53,12 @@ function formatDate(date) {
   );
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 module.exports = {
   formatter,
   isNumeric,
@@ -61,4 +67,5 @@ module.exports = {
   randomIntFromInterval,
   sleep,
   formatDate,
+  sleep,
 };
