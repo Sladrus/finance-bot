@@ -55,8 +55,8 @@ function identifyRequisites(text) {
     zec_t: /\bt[13][a-zA-Z0-9]{32}/g,
     zaddr: /\bzs[a-z0-9]{76}/g,
     email: /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
-    // phone: /\b\+?[1-9]{1}[0-9]{3,14}/g,
     btccash: /\b(q[0-9a-z]{41})\b/g,
+    bnb: /\b(bnb1)[0-9a-z]{38}/g,
   };
 
   let foundRequisites = [];
