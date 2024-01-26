@@ -3,7 +3,7 @@ module.exports = async function getChatIdSleepGroup(bot, msg, args) {
   if (msg.chat.type === 'private') return;
   if (msg.chat.id !== -1001658175217) return;
   try {
-    const link = await bot.exportChatInviteLink(-944002384);
+    const link = await bot.exportChatInviteLink(-1001512396180);
     await bot.sendMessage(-1001658175217, link);
     console.log(link);
   } catch (e) {
