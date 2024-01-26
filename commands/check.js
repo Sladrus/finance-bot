@@ -53,6 +53,7 @@ function identifyRequisites(text) {
     sol: /\b[1-9A-HJ-NP-Za-km-z]{32,44}/g,
     zec_z: /\bz[a-zA-Z0-9]{92}/g,
     zec_t: /\bt[13][a-zA-Z0-9]{32}/g,
+    zaddr: /\bzs[a-z0-9]{76}/g,
     email: /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
     // phone: /\b\+?[1-9]{1}[0-9]{3,14}/g,
     btccash: /\b(q[0-9a-z]{41})\b/g,
