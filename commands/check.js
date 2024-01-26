@@ -1,5 +1,32 @@
+const { getAdmins } = require('../http/api-admins');
 const { checkReqs } = require('../http/api-bpersons');
 const { sleep } = require('../utils');
+
+function checkObjectPresence(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    const obj1 = arr1[i];
+    for (let j = 0; j < arr2.length; j++) {
+      const obj2 = arr2[j];
+      if (obj1.id === Number(obj2.tlg_user_id)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkObjectPresenceAdmin(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    const obj1 = arr1[i];
+    for (let j = 0; j < arr2.length; j++) {
+      const obj2 = arr2[j];
+      if (obj1.id === Number(obj2.user.id)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 function identifyRequisites(text) {
   const requisitesPatterns = {
@@ -58,7 +85,13 @@ module.exports = async function checkRequisites(bot, msg, args) {
 
   const replyMessage = msg.reply_to_message;
   if (msg.chat.type === 'private') return;
-
+  const admins = await getAdmins();
+  const isValidAdmins = checkObjectPresence([msg.from], admins);
+  if (!isValidAdmins)
+    return await bot.sendMessage(
+      msg.chat.id,
+      `Вы не можете использовать эту комманду.`
+    );
   try {
     const requisites = identifyRequisites(replyMessage.text);
 
