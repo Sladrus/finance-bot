@@ -22,7 +22,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
       parse_mode: 'HTML',
     });
   await bot.editMessageText(
-    `Личный кабинет создан и активирован.\n\nEmail для входа: ${data?.name}\nПароль: ${data?.password}`,
+    `Личный кабинет создан и активирован\n\nEmail для входа: ${data?.name}\nПароль: ${data?.password}`,
     {
       chat_id: msg.chat.id,
       message_id: message.message_id,
