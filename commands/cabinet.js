@@ -15,6 +15,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
     '⌛️ Создание/проверка личного кабинета...'
   );
   const data = await createCabinet(bot, msg.chat.id);
+  console.log(data);
   if (!data)
     return await bot.editMessageText(`Чат уже привязан к личному кабинету`, {
       chat_id: msg.chat.id,
