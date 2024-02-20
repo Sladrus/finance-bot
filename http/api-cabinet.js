@@ -1,4 +1,4 @@
-const { officeApi, botApi } = require('./api');
+const { botApi, mainApi } = require('./api');
 
 async function createCabinet(bot, chat_id) {
   try {
