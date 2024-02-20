@@ -14,32 +14,19 @@ module.exports = async function cabinetCommand(bot, msg, args) {
     msg.chat.id,
     '⌛️ Создание/проверка личного кабинета...'
   );
-  console.log(message);
-  const result = await createCabinet(bot, msg.chat.id, group.id);
-  console.log(result);
-  if (!result?.result)
-    return await bot.editMessageText(`Ошибка, попробуйте позже.`, {
+  const data = await createCabinet(bot, msg.chat.id);
+  if (!data)
+    return await bot.editMessageText(`Чат уже привязан к личному кабинету`, {
       chat_id: msg.chat.id,
       message_id: message.message_id,
       parse_mode: 'HTML',
     });
-  if (result?.status === 'created')
-    return await bot.editMessageText(
-      `<b>Личный кабинет создан:\n\n</b>Активировать: https://app.moneyport.ru/a/${result?.token}`,
-      {
-        chat_id: msg.chat.id,
-        message_id: message.message_id,
-        parse_mode: 'HTML',
-      }
-    );
-
-  if (result?.status === 'activated')
-    return await bot.editMessageText(
-      `Личный кабинет создан и активирован\nEmail для входа: ${result?.email}`,
-      {
-        chat_id: msg.chat.id,
-        message_id: message.message_id,
-        parse_mode: 'HTML',
-      }
-    );
+  await bot.editMessageText(
+    `Личный кабинет создан и активирован.\n\nEmail для входа: ${data?.name}\nПароль: ${data?.password}`,
+    {
+      chat_id: msg.chat.id,
+      message_id: message.message_id,
+      parse_mode: 'HTML',
+    }
+  );
 };

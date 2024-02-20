@@ -1,14 +1,13 @@
 const { officeApi, botApi } = require('./api');
 
-async function createCabinet(bot, chat_id, group_id) {
+async function createCabinet(bot, chat_id) {
   try {
-    const response = await officeApi.get(
-      `/register?chat_id=${chat_id}&group_id=${group_id}&api_key=JHdjkwhuj2hUKJ@H3uh2uoihfduiah!`
-    );
+    const response = await mainApi.post(`/cabinet/bindingChat`, {
+      chatId: chat_id,
+    });
     return response.data;
   } catch (error) {
     console.error(error);
-    return { result: false };
   }
 }
 
