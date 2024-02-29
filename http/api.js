@@ -59,12 +59,13 @@ async function createBlobFromFile(path) {
   return new Blob([file]);
 }
 
-async function addLinksToGroup(chat_id, links) {
+async function addLinksToGroup(chat_id, user_id, links) {
   try {
-    const response = await mainApi.post(
-      `/telegram/add-invite`,
-      { chat_id, links }
-    );
+    const response = await mainApi.post(`/telegram/add-invite`, {
+      chat_id,
+      user_id,
+      links,
+    });
     return response.data;
   } catch (error) {
     console.error(error);

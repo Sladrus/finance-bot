@@ -16,7 +16,6 @@ function checkObjectPresence(arr1, arr2) {
 }
 
 module.exports = async function cityCommand(bot, msg, args) {
-  //МОЖЕТ ВЫЗЫВАТЬСЯ ТОЛЬКО В ОПРЕДЕЛЕННОЙ ГРУППЕ
   if (msg.chat.type === 'private') return;
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
   if (!group) return;
