@@ -2,7 +2,7 @@ const axios = require('axios');
 
 async function convertCurrencyEx(currencies, amount) {
   const exchangeApi = axios.create({
-    baseURL: 'http://converter.1210059-cn07082.tw1.ru',
+    baseURL: 'http://new-converter.1210059-cn07082.tw1.ru',
   });
 
   const count = amount || 1;
@@ -18,7 +18,7 @@ async function convertCurrencyEx(currencies, amount) {
 
 async function convertCurrencyMoex(currencies, amount) {
   const exchangeApi = axios.create({
-    baseURL: 'http://converter.1210059-cn07082.tw1.ru',
+    baseURL: 'http://new-converter.1210059-cn07082.tw1.ru',
   });
 
   const count = amount || 1;
