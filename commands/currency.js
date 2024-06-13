@@ -56,7 +56,7 @@ module.exports = async function currencyCommand(bot, msg, match) {
     parse_mode: 'HTML',
   });
   try {
-    currency_codes = ['EURRUB', 'USDRUB']; //EURRUB USDRUB
+    currency_codes = []; //EURRUB USDRUB
     console.log(currency_codes.includes(exchange));
     if (currency_codes.includes(exchange.toUpperCase())) {
       type = 'moex';
