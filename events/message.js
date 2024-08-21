@@ -1,20 +1,21 @@
-const { updateActivity } = require('../http/api-activity');
-const { getAdmins } = require('../http/api-admins');
+const { updateActivity } = require("../http/api-activity");
+const { getAdmins } = require("../http/api-admins");
 const {
   findWhereTaken,
   restoreChat,
   restoreLkChat,
-} = require('../http/api-chat');
+} = require("../http/api-chat");
 const {
   updateGroup,
   findOrCreateGroup,
   restoreGroup,
   findGroup,
-} = require('../http/api-group');
-const { createLogs } = require('../http/api-logs');
+} = require("../http/api-group");
+const { createLogs } = require("../http/api-logs");
 
 module.exports = async function messageEvent(bot, msg) {
-  if (msg.chat.type === 'private') return;
+  return;
+  if (msg.chat.type === "private") return;
   if (msg?.migrate_from_chat_id) return;
   if (msg?.group_chat_created) return;
   if (msg?.new_chat_member) return;
@@ -23,8 +24,8 @@ module.exports = async function messageEvent(bot, msg) {
     const log = await createLogs(bot, msg);
     console.log(log);
   }
-  if (msg?.text == '/sleep') return;
-  console.log('Create Group from message');
+  if (msg?.text == "/sleep") return;
+  console.log("Create Group from message");
   const group = await findOrCreateGroup(bot, msg.chat.id, msg.chat.title);
 
   if (msg?.migrate_to_chat_id !== undefined) {
@@ -34,9 +35,9 @@ module.exports = async function messageEvent(bot, msg) {
     });
     await bot.sendMessage(
       msg?.migrate_to_chat_id,
-      'Новый чат айди: `' + msg?.migrate_to_chat_id + '`',
+      "Новый чат айди: `" + msg?.migrate_to_chat_id + "`",
       {
-        parse_mode: 'Markdown',
+        parse_mode: "Markdown",
       }
     );
   }

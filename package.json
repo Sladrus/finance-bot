@@ -33,6 +33,6 @@
     "yandex-speech": "^0.0.14"
   },
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.22"
   }
 }
