@@ -88,7 +88,7 @@ const showBalance = async (bot, msg, chatId) => {
       : `Балансы пустые. Используйте /b «валюта» «сумма» «комментарий»`,
     {
       parse_mode: "HTML",
-      message_thread_id: msg?.reply_to_message ? null : msg?.message_thread_id,
+      message_thread_id: !msg?.is_topic_message ? null : msg?.message_thread_id,
     }
   );
 };
@@ -102,7 +102,7 @@ const setBalance = async (bot, msg, args) => {
       `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
       {
         parse_mode: "HTML",
-        message_thread_id: msg?.reply_to_message
+        message_thread_id: !msg?.is_topic_message
           ? null
           : msg?.message_thread_id,
       }
@@ -114,7 +114,7 @@ const setBalance = async (bot, msg, args) => {
       `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
       {
         parse_mode: "HTML",
-        message_thread_id: msg?.reply_to_message
+        message_thread_id: !msg?.is_topic_message
           ? null
           : msg?.message_thread_id,
       }
@@ -141,7 +141,7 @@ const setBalance = async (bot, msg, args) => {
     )}`,
     {
       parse_mode: "HTML",
-      message_thread_id: msg?.reply_to_message ? null : msg?.message_thread_id,
+      message_thread_id: !msg?.is_topic_message ? null : msg?.message_thread_id,
     }
   );
 };
@@ -154,7 +154,7 @@ const delBalance = async (bot, msg, args) => {
       `Произошла ошибка! Такая валюта не принимается/!`,
       {
         parse_mode: "HTML",
-        message_thread_id: msg?.reply_to_message
+        message_thread_id: !msg?.is_topic_message
           ? null
           : msg?.message_thread_id,
       }
@@ -166,7 +166,7 @@ const delBalance = async (bot, msg, args) => {
     `Баланс <b>${balance.bal.symbol.toUpperCase()}</b> очищен`,
     {
       parse_mode: "HTML",
-      message_thread_id: msg?.reply_to_message ? null : msg?.message_thread_id,
+      message_thread_id: !msg?.is_topic_message ? null : msg?.message_thread_id,
     }
   );
 };
@@ -188,7 +188,7 @@ module.exports = async function bCommand(bot, msg, args) {
     `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
     {
       parse_mode: "HTML",
-      message_thread_id: msg?.reply_to_message ? null : msg?.message_thread_id,
+      message_thread_id: !msg?.is_topic_message ? null : msg?.message_thread_id,
     }
   );
 };
