@@ -1,4 +1,4 @@
-const { baseApi } = require('./api');
+const { baseApi } = require("./api");
 
 async function showBalances(bot, chat_id) {
   try {
@@ -9,12 +9,12 @@ async function showBalances(bot, chat_id) {
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat_id,
-        'Учет кассы в этом чате не активирован. Используйте /active'
+        "Учет кассы в этом чате не активирован. Используйте /active"
       );
     }
     if (error?.response?.status === 401) {
       await bot.sendMessage(chat_id, `Неправильный API токен.`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
   }
@@ -28,9 +28,9 @@ async function setActives(
   comment
 ) {
   try {
-    const first = from.first_name || '';
-    const last = from.last_name || '';
-    const name = first + ' ' + last;
+    const first = from.first_name || "";
+    const last = from.last_name || "";
+    const name = first + " " + last;
     const response = await baseApi.post(
       `/balance/actives/${chat.id}`,
       {
@@ -51,17 +51,17 @@ async function setActives(
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
-        'Учет кассы в этом чате не активирован. Используйте /active'
+        "Учет кассы в этом чате не активирован. Используйте /active"
       );
     }
     if (error?.response?.status === 400) {
       await bot.sendMessage(chat.id, `${error?.response?.data?.message}`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
     if (error?.response?.status === 401) {
       await bot.sendMessage(chat.id, `Неправильный API токен.`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
   }
@@ -77,9 +77,9 @@ async function setBalances(
   expression
 ) {
   try {
-    const first = from.first_name || '';
-    const last = from.last_name || '';
-    const name = first + ' ' + last;
+    const first = from.first_name || "";
+    const last = from.last_name || "";
+    const name = first + " " + last;
     const response = await baseApi.post(
       `/balance/set/${chat.id}`,
       {
@@ -102,17 +102,17 @@ async function setBalances(
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
-        'Учет кассы в этом чате не активирован. Используйте /active'
+        "Учет кассы в этом чате не активирован. Используйте /active"
       );
     }
     if (error?.response?.status === 400) {
       await bot.sendMessage(chat.id, `${error?.response?.data?.message}`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
     if (error?.response?.status === 401) {
       await bot.sendMessage(chat.id, `Неправильный API токен.`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
   }
@@ -120,14 +120,14 @@ async function setBalances(
 
 async function delBalances(bot, { chat, message_id, from }, symbol, event) {
   try {
-    const first = from.first_name || '';
-    const last = from.last_name || '';
-    const name = first + ' ' + last;
+    const first = from.first_name || "";
+    const last = from.last_name || "";
+    const name = first + " " + last;
     const response = await baseApi.post(
       `/balance/del/${chat.id}`,
       {
         event,
-        comment: 'BDel',
+        comment: "BDel",
         message_id,
         first_name: name,
       },
@@ -143,17 +143,17 @@ async function delBalances(bot, { chat, message_id, from }, symbol, event) {
     if (error?.response?.status === 403) {
       await bot.sendMessage(
         chat.id,
-        'Учет кассы в этом чате не активирован. Используйте /active'
+        "Учет кассы в этом чате не активирован. Используйте /active"
       );
     }
     if (error?.response?.status === 400) {
       await bot.sendMessage(chat.id, `${error.response?.data?.message}`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
     if (error?.response?.status === 401) {
       await bot.sendMessage(chat.id, `Неправильный API токен.`, {
-        parse_mode: 'HTML',
+        parse_mode: "HTML",
       });
     }
   }

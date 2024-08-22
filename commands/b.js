@@ -86,7 +86,7 @@ const showBalance = async (bot, msg, chatId) => {
     balances.length > 0
       ? `Баланс:\n${message}`
       : `Балансы пустые. Используйте /b «валюта» «сумма» «комментарий»`,
-    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
   );
 };
 
@@ -97,14 +97,14 @@ const setBalance = async (bot, msg, args) => {
     return await bot.sendMessage(
       msg.chat.id,
       `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
-      { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+      { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
     );
   }
   if (symbol === null || value === undefined)
     return await bot.sendMessage(
       msg.chat.id,
       `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
-      { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+      { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
     );
   const balance = await setBalances(
     bot,
@@ -126,7 +126,7 @@ const setBalance = async (bot, msg, args) => {
       balance.oldBal.symbol,
       balance.oldBal.balance
     )}`,
-    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
   );
 };
 
@@ -136,14 +136,14 @@ const delBalance = async (bot, msg, args) => {
     return await bot.sendMessage(
       msg.chat.id,
       `Произошла ошибка! Такая валюта не принимается/!`,
-      { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+      { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
     );
   const balance = await delBalances(bot, msg, symbol, event);
   if (balance === undefined) return;
   await bot.sendMessage(
     msg.chat.id,
     `Баланс <b>${balance.bal.symbol.toUpperCase()}</b> очищен`,
-    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
   );
 };
 //b sp rub 100
@@ -161,6 +161,6 @@ module.exports = async function bCommand(bot, msg, args) {
   return await bot.sendMessage(
     msg.chat.id,
     `Произошла ошибка! Проверьте правильность ввода комманды/валюты.`,
-    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id }
+    { parse_mode: "HTML", message_thread_id: msg?.message_thread_id || null }
   );
 };
