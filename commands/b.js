@@ -148,6 +148,7 @@ const delBalance = async (bot, msg, args) => {
 };
 //b sp rub 100
 module.exports = async function bCommand(bot, msg, args) {
+  console.log(msg);
   if (args["=ERRORS"].length) return;
   if (msg.chat.type === "private") return;
   const group = await findGroup(bot, msg.chat.id, msg.chat.title);
