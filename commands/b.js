@@ -95,7 +95,6 @@ const showBalance = async (bot, msg, chatId) => {
 
 const setBalance = async (bot, msg, args) => {
   const [event, symbol, value, comment, expression] = validateArgs(args);
-  console.log(event, symbol, Number(value), comment, "TYT");
   if (isNaN(Number(value))) {
     return await bot.sendMessage(
       msg.chat.id,
