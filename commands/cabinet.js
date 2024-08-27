@@ -1,5 +1,5 @@
 const { createCabinet } = require("../http/api-cabinet");
-const { findOrCreateGroup, findGroup } = require("../http/api-group");
+const { findGroup } = require("../http/api-group");
 
 module.exports = async function cabinetCommand(bot, msg, args) {
   if (msg.chat.type === "private") return;
@@ -16,7 +16,6 @@ module.exports = async function cabinetCommand(bot, msg, args) {
   );
   const data = await createCabinet(bot, msg.chat.id);
   console.log(data);
-  return;
   if (!data)
     return await bot.editMessageText(`Чат уже привязан к личному кабинету`, {
       chat_id: msg.chat.id,
@@ -24,7 +23,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
       parse_mode: "HTML",
     });
   await bot.editMessageText(
-    `Личный кабинет создан и активирован\n\nEmail для входа: ${data?.email}\nПароль: ${data?.password}`,
+    `Ваша ссылка для привязки чат-кассы: https://app.moneyport.ru/link/${data?.token}`,
     {
       chat_id: msg.chat.id,
       message_id: message.message_id,
