@@ -16,7 +16,7 @@ module.exports = async function cabinetCommand(bot, msg, args) {
   );
   const data = await createCabinet(bot, msg.chat.id);
   console.log(data);
-  if (!data?.token)
+  if (!data?.email)
     return await bot.editMessageText(
       `Чат уже привязан к личному кабинету на почту - ${data?.email}\n\nДля авторизации перейдите по ссылке - https://app.moneyport.ru\n\n<i>Если забыли пароль, воспользуйтесь кнопкой "Забыли пароль?" под формой</i>`,
       {

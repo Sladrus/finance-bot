@@ -1,4 +1,4 @@
-const { botApi, mainApi } = require('./api');
+const { botApi, mainApi } = require("./api");
 
 async function createCabinet(bot, chat_id) {
   try {
@@ -8,6 +8,7 @@ async function createCabinet(bot, chat_id) {
     return response.data;
   } catch (error) {
     console.error(error);
+    return error?.response?.data;
   }
 }
 
