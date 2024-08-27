@@ -16,12 +16,15 @@ module.exports = async function cabinetCommand(bot, msg, args) {
   );
   const data = await createCabinet(bot, msg.chat.id);
   console.log(data);
-  if (!data)
-    return await bot.editMessageText(`Чат уже привязан к личному кабинету`, {
-      chat_id: msg.chat.id,
-      message_id: message.message_id,
-      parse_mode: "HTML",
-    });
+  if (!data?.token)
+    return await bot.editMessageText(
+      `Чат уже привязан к личному кабинету на почту - ${data?.email}\n\nДля авторизации перейдите по ссылке - https://app.moneyport.ru\n\n<i>Если забыли пароль, воспользуйтесь кнопкой "Забыли пароль?" под формой</i>`,
+      {
+        chat_id: msg.chat.id,
+        message_id: message.message_id,
+        parse_mode: "HTML",
+      }
+    );
   await bot.editMessageText(
     `Ваша ссылка для привязки чат-кассы: https://app.moneyport.ru/link/${data?.token}`,
     {
